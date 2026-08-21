@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الهيئة العامة للمعلومات المدنية</title>
+    <!-- استدعاء خط Cairo للحصول على مظهر مطابق -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- استدعاء مكتبة الأيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           التنسيقات العامة
+           ========================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================
+           تنسيقات الهيدر المطابقة للصورة الجديدة
+           ========================================== */
+        .header_s {
+            width: 100%;
+            max-width: 450px; /* ليتناسب مع عرض الجوال كما بالصورة */
+            /* خلفية مزخرفة بالنقش الإسلامي المكتشف من الصورة */
+            background-color: #f8fa8;
+            background-image: radial-gradient(#d3d7de 1px, transparent 0), radial-gradient(#d3d7de 1px, #f4f6f8 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            padding: 15px 15px 20px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        /* الصف العلوي للأزرار */
+        .top-buttons-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* زر القائمة الرئيسية (أزرق غامق) */
+        .main-menu-btn {
+            background-color: #0c50a3;
+            color: #ffffff;
+            border: none;
+            padding: 6px 14px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        /* زر اللغة (أبيض بحواف زرقاء) */
+        .lang-btn {
+            background-color: #ffffff;
+            color: #0c50a3;
+            border: 1px solid #0c50a3;
+            padding: 4px 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .lang-btn i {
+            font-size: 13px;
+        }
+
+        /* صف الشعار المنتصف */
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-row img {
+            max-width: 100%;
+            height: auto;
+            max-height: 55px;
+            object-fit: contain;
+        }
+
+        /* القائمة المنسدلة عند الضغط على زر القائمة الرئيسية */
+        .nav-dropdown {
+            display: none;
+            background-color: #0c50a3;
+            margin-top: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .nav-dropdown.show {
+            display: block;
+        }
+
+        .nav-dropdown ul {
+            list-style: none;
+        }
+
+        .nav-dropdown li a {
+            display: block;
+            color: #ffffff;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-dropdown li a:hover {
+            background-color: #083b7a;
+        }
+
+
+        /* ==========================================
+           تنسيقات محتوى الكروت (الكارت الأصلي)
+           ========================================== */
+        .page-content-wrapper {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-card {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #dcdcdc;
+        }
+
+        /* الجزء العلوي - خلفية الأبراج والعنوان */
+        .header-bg {
+            height: 130px;
+            background: linear-gradient(to bottom, rgba(80, 20, 100, 0.3), rgba(0, 40, 120, 0.6)), 
+                        url('https://services.paci.gov.kw/assets/images/sliderbg.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 800;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        /* قائمة الكروت */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            background-color: #0b4e9f;
+        }
+
+        .card-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #0c50a3;
+            border-bottom: 1px solid #1a62ba;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            user-select: none;
+        }
+
+        .card-item:last-child {
+            border-bottom: none;
+        }
+
+        /* كارت بحالة التركيز (اللون الرمادي المطابق للصورة) */
+        .card-item.active {
+            background-color: #797979 !important;
+        }
+
+        .card-text {
+            color: #ffffff;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .card-icon {
+            color: #ffffff;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+        }
+
+        /* قسم النموذج السفلي */
+        .form-section {
+            background-color: #ffffff;
+            padding: 25px 20px 20px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            color: #111111;
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+
+        .custom-input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            padding: 0 10px;
+            font-size: 14px;
+            outline: none;
+            margin-bottom: 30px;
+            background-color: #fafafa;
+        }
+
+        .custom-input:focus {
+            border-color: #0b4e9f;
+            background-color: #ffffff;
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .submit-btn {
+            background-color: #0c50a3;
+            color: #ffffff;
+            border: none;
+            padding: 6px 22px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 3px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-btn:hover {
+            background-color: #083b7a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         الهيدر المطابق للصورة الجديدة
+         ========================================== -->
+    <header class="header_s">
+        <!-- الأزرار العلويّة -->
+        <div class="top-buttons-row">
+            <button class="main-menu-btn" id="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+                القائمة الرئيسية
+            </button>
+
+            <a href="javascript:void(0)" class="lang-btn" onclick="ChangeLang('en')">
+                English
+                <i class="fa-solid fa-globe"></i>
+            </a>
+        </div>
+
+        <!-- شعار الهيئة -->
+        <div class="logo-row">
+            <a href="/">
+                <img src="https://services.paci.gov.kw/assets/images/pacilogo.png" alt="الهيئة العامة للمعلومات المدنية">
+            </a>
+        </div>
+
+        <!-- القائمة التفاعلية للمنيو -->
+        <nav class="nav-dropdown" id="navMenu">
+            <ul>
+                <li><a href="/">الرئيسية</a></li>
+                <li><a href="/about">عن الهيئة</a></li>
+                <li><a href="/#build-section">الخدمات الإلكترونية</a></li>
+                <li><a href="/news">أخبار الهيئة</a></li>
+                <li><a href="/card/payment">دفع رسوم البطاقة و المخالفات</a></li>
+                <li><a href="https://meta.e.gov.kw">حجز المواعيد</a></li>
+                <li><a href="/contact-us">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ==========================================
+         محتوى الكروت المجهزة
+         ========================================== -->
+    <div class="page-content-wrapper">
+        <div class="main-card">
+            <!-- قسم العنوان مع الخلفية -->
+            <div class="header-bg">
+                <h1 class="header-title">خدمات الهيئة</h1>
+            </div>
+
+            <!-- قائمة الكروت/الخدمات -->
+            <div class="services-list">
+                
+                <div class="card-item" data-title="الإستعلام عن رقم مدني">
+                    <span class="card-text">الإستعلام عن رقم مدني</span>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-share-from-square fa-flip-horizontal"></i>
+                    </div>
+                </div>
+
+                <div class="card-item" data-title="طلبات الجهات والعناوين">
+                    <span class="card-text">طلبات الجهات والعناوين</span>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                </div>
+
+                <div class="card-item" data-title="صلاحية البطاقة">
+                    <span class="card-text">صلاحية البطاقة</span>
+                    <div class="card-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+                </div>
+
+                <div class="card-item" data-title="توفر العنوان">
+                    <span class="card-text">توفر العنوان</span>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                </div>
+
+                <div class="card-item" data-title="تجديد البطاقة">
+                    <span class="card-text">تجديد البطاقة</span>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-rotate"></i>
+                    </div>
+                </div>
+
+                <!-- الكارت المفعل افتراضياً كالصورة (حالة البطاقة) -->
+                <div class="card-item active" data-title="حالة البطاقة">
+                    <span class="card-text">حالة البطاقة</span>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-user-group"></i>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- قسم النموذج الإدخالي -->
+            <div class="form-section">
+                <label class="input-label" id="dynamicLabel">حالة البطاقة</label>
+                <input type="text" class="custom-input" id="civilInput">
+                
+                <div class="button-wrapper">
+                    <button type="button" class="submit-btn">إستعلام</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         السلوك والتفاعل (JavaScript)
+         ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تفاعل اختيار الكروت
+            const cards = document.querySelectorAll('.card-item');
+            const dynamicLabel = document.getElementById('dynamicLabel');
+
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    cards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    const selectedTitle = this.getAttribute('data-title');
+                    dynamicLabel.textContent = selectedTitle;
+                });
+            });
+
+            // فتح وإغلاق القائمة عند النقر على "القائمة الرئيسية"
+            const menuToggle = document.getElementById('menuToggle');
+            const navMenu = document.getElementById('navMenu');
+
+            menuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+        });
+
+        function ChangeLang(lang) {
+            console.log("تغيير اللغة إلى: " + lang);
+        }
+    </script>
+</body>
+</html>
