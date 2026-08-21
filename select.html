@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="ar"><head><meta charset="UTF-8"><title>سهل</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="select.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head><style></style><body><div id="divhedaer"><img id="imghedaer" src="hedimg.png"></div>
+    <hr id="hr"><h2 id="texbode">يرجى اختيار الخدمة المطلوب تنفيذها</h2><div id="divselect">
+        <div class="service-box" id="div1"><img id="img11"src="GFJH (1).png">
+            <h2 id="tex11">حجز موعد البصمة البيومتريه</h2><hr></div><div class="service-box" id="div1">
+                <img id="img111"src="img1.jpg"><h2 id="tex1">تعديل العنوان</h2><hr></div>
+                <div class="service-box" id="div1"><img id="img11"src="img5.png">
+                    <h2 id="tex1">توصيل البطاقة</h2><hr></div><div class="service-box" id="div1">
+                        <img id="img11"src="img4.png"><h2 id="tex1">تحديث الصورة للمصادقة</h2><hr>
+                    </div><div class="service-box" id="div1"><img id="img11"src="img6.jpg"><h2 id="tex1">التحقق من حالة البطاقة</h2><hr></div>
+                </div>
+                <script>
+                const services=document.querySelectorAll('.service-box');const pages=['form1.html','form2.html','form3.html','form4.html','form5.html'];services.forEach(function(el,index){el.addEventListener('click',function(){if(pages[index]){window.location.href=pages[index]}})});
+                </script>
+</body></html>

