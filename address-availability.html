@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعديل العنوان - الهيئة العامة للمعلومات المدنية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ==========================================
+           التنسيقات العامة
+           ========================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ==========================================
+           تنسيقات الهيدر
+           ========================================== */
+        .header_s {
+            width: 100%;
+            max-width: 450px;
+            background-color: #f8f9fa;
+            background-image: radial-gradient(#d3d7de 1px, transparent 0), radial-gradient(#d3d7de 1px, #f4f6f8 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            padding: 15px 15px 20px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-row img {
+            max-width: 100%;
+            height: auto;
+            max-height: 55px;
+            object-fit: contain;
+        }
+
+        /* ==========================================
+           تنسيقات كارت إدخال البيانات
+           ========================================== */
+        .page-content-wrapper {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-card {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #dcdcdc;
+        }
+
+        /* الجزء العلوي - الخلفية والعنوان */
+        .header-bg {
+            height: 110px;
+            background: linear-gradient(to bottom, rgba(80, 20, 100, 0.3), rgba(0, 40, 120, 0.6)), 
+                        url('https://services.paci.gov.kw/assets/images/sliderbg.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .header-icon {
+            color: #ffffff;
+            font-size: 22px;
+        }
+
+        /* قسم النموذج الإدخالي */
+        .form-section {
+            background-color: #ffffff;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            color: #222222;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-align: center; /* توسيط عنوان الحقل */
+        }
+
+        .custom-input, .custom-select {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            padding: 0 12px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fafafa;
+            transition: border-color 0.2s, background-color 0.2s;
+            text-align: center; /* توسيط النص */
+            text-align-last: center; /* توسيط نصوص الخيارات */
+        }
+
+        .custom-input::placeholder {
+            text-align: center;
+        }
+
+        .custom-input:focus, .custom-select:focus {
+            border-color: #0b4e9f;
+            background-color: #ffffff;
+        }
+
+        /* صف حقول مزدوجة (مثل الشارع والقطعة) */
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* زر الحفظ */
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: #0c50a3;
+            color: #ffffff;
+            border: none;
+            padding: 10px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .submit-btn:hover {
+            background-color: #083b7a;
+        }
+
+        /* زر العودة للرئيسية */
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 15px;
+            color: #666;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #0c50a3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header class="header_s">
+        <div class="logo-row">
+            <a href="index.html">
+                <img src="https://play-lh.googleusercontent.com/14LtLuFiZHQYJN9X8gulgv_qdYm02CcTq0nvGZhimdnjQnc9J5jGZx3BLdnlLRlmjeFNjBljmowCKTE1mxBobg=w600-h300-pc0xffffff-pd" alt="الهيئة العامة للمعلومات المدنية">
+            </a>
+        </div>
+    </header>
+
+    <!-- محتوى النموذج -->
+    <div class="page-content-wrapper">
+        <div class="main-card">
+            
+            <!-- عنوان الصفحة -->
+            <div class="header-bg">
+                <i class="fa-solid fa-house-user header-icon"></i>
+                <h1 class="header-title">تعديل بيانات العنوان</h1>
+            </div>
+
+            <!-- نموذج ادخال البيانات -->
+            <form class="form-section" id="addressForm">
+                
+                <div class="form-group">
+                    <label class="input-label" for="civilId">الرقم المدني *</label>
+                    <input type="text" id="civilId" class="custom-input" maxlength="12" placeholder="أدخل الرقم المدني" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="governorate">المحافظة *</label>
+                    <select id="governorate" class="custom-select" required>
+                        <option value="" disabled selected>اختر المحافظة</option>
+                        <option value="1">العاصمة</option>
+                        <option value="2">حولي</option>
+                        <option value="3">الفروانية</option>
+                        <option value="4">الأحمدي</option>
+                        <option value="5">الجهراء</option>
+                        <option value="6">مبارك الكبير</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="area">المنطقة *</label>
+                    <input type="text" id="area" class="custom-input" placeholder="أدخل اسم المنطقة" required>
+                </div>
+
+                <!-- صف يحتوي على القطعة والشارع -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="input-label" for="block">القطعة *</label>
+                        <input type="text" id="block" class="custom-input" placeholder="رقم القطعة" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="input-label" for="street">الشارع *</label>
+                        <input type="text" id="street" class="custom-input" placeholder="اسم/رقم الشارع" required>
+                    </div>
+                </div>
+
+                <!-- صف يحتوي على البيت/المبنى والجدة (اختياري) -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="input-label" for="building">المبنى / منزل *</label>
+                        <input type="text" id="building" class="custom-input" placeholder="رقم المبنى أو المنزل" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="input-label" for="jaddah">الجادة (اختياري)</label>
+                        <input type="text" id="jaddah" class="custom-input" placeholder="رقم الجادة">
+                    </div>
+                </div>
+
+                
+
+                <div class="button-wrapper">
+                    <button type="submit" class="submit-btn">تحديث العنوان</button>
+                </div>
+
+               
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('addressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('تم تقديم طلب تعديل العنوان بنجاح!');
+        });
+    </script>
+
+</body>
+</html>
