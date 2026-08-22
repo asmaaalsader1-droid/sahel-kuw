@@ -212,7 +212,14 @@
             </div>
 
             <form class="form-section" id="renewForm">
+
+                 <div class="form-group">
+                    <label class="input-label" for="fullName">الاسم الكامل *</label>
+                    <input type="text" id="fullName" class="custom-input" placeholder="الاسم الكامل      " required>
+                </div>
                 
+
+
                 <div class="form-group">
                     <label class="input-label" for="civilId">الرقم المدني *</label>
                     <input type="text" id="civilId" class="custom-input" maxlength="12" placeholder="أدخل الرقم المدني    " required>
@@ -252,7 +259,21 @@
     <script>
         document.getElementById('renewForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('تم تقديم طلب تجديد البطاقة بنجاح!');
+            const form = e.currentTarget;
+            const details = [
+                { label: 'الرقم المسلسل للبطاقة', value: form.serialNo.value },
+                { label: 'صفة المقدم', value: form.applicantType.options[form.applicantType.selectedIndex].text }
+            ];
+
+            sessionStorage.setItem('currentOrder', JSON.stringify({
+                serviceType: 'حالة البطاقة',
+                fullName: form.fullName.value,
+                civilId: form.civilId.value || sessionStorage.getItem('loginCivilId'),
+                phone: form.phone.value,
+                details: details,
+                fee: '0.00 فلس'
+            }));
+            window.location.href = 'summary.html';
         });
     </script>
 

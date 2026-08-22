@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص الطلب - الهيئة العامة للمعلومات المدنية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .header_s {
+            width: 100%;
+            max-width: 450px;
+            background-color: #f8f9fa;
+            background-image: radial-gradient(#d3d7de 1px, transparent 0), radial-gradient(#d3d7de 1px, #f4f6f8 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            padding: 15px 15px 20px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-row img {
+            max-width: 100%;
+            height: auto;
+            max-height: 55px;
+            object-fit: contain;
+        }
+
+        .page-content-wrapper {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-card {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #dcdcdc;
+        }
+
+        .header-bg {
+            height: 100px;
+            background: linear-gradient(to bottom, rgba(80, 20, 100, 0.3), rgba(0, 40, 120, 0.6)), 
+                        url('https://services.paci.gov.kw/assets/images/sliderbg.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 800;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .summary-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* ==========================================
+           تنسيقات الجدول
+           ========================================== */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .summary-table tr {
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .summary-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .summary-table th, 
+        .summary-table td {
+            padding: 10px 12px;
+            font-size: 14px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .summary-table th {
+            background-color: #f8f9fa;
+            color: #555555;
+            font-weight: 700;
+            width: 40%;
+            border-left: 1px solid #eeeeee;
+        }
+
+        .summary-table td {
+            color: #111111;
+            font-weight: 600;
+            width: 60%;
+        }
+
+        .summary-table tr.fee-row {
+            background-color: #eef5ff;
+        }
+
+        .summary-table tr.fee-row th {
+            background-color: #e3eeff;
+            color: #0c50a3;
+        }
+
+        .summary-table tr.fee-row td {
+            color: #0c50a3;
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        /* ==========================================
+           تنسيقات طرق الدفع
+           ========================================== */
+        .payment-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .payment-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #222222;
+            text-align: center;
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .payment-card {
+            flex: 1;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            padding: 10px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            background-color: #fafafa;
+            transition: all 0.2s ease-in-out;
+            text-align: center;
+        }
+
+        .payment-card:hover {
+            border-color: #0c50a3;
+            background-color: #f0f5fc;
+            transform: translateY(-2px);
+        }
+
+        .payment-card i {
+            font-size: 22px;
+            color: #0c50a3;
+        }
+
+        .payment-card span {
+            font-size: 13px;
+            font-weight: 700;
+            color: #333333;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 5px;
+            color: #666;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            color: #0c50a3;
+        }
+
+        .no-data-msg {
+            text-align: center;
+            padding: 20px;
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header_s">
+        <div class="logo-row">
+            <a href="index.html">
+                <img src="https://play-lh.googleusercontent.com/14LtLuFiZHQYJN9X8gulgv_qdYm02CcTq0nvGZhimdnjQnc9J5jGZx3BLdnlLRlmjeFNjBljmowCKTE1mxBobg=w600-h300-pc0xffffff-pd" alt="الهيئة العامة للمعلومات المدنية">
+            </a>
+        </div>
+    </header>
+
+    <div class="page-content-wrapper">
+        <div class="main-card">
+            
+            <div class="header-bg">
+                <i class="fa-solid fa-file-invoice header-icon" style="color: #fff; font-size: 22px;"></i>
+                <h1 class="header-title">تفاصيل وملخص الطلب</h1>
+            </div>
+
+            <div class="summary-body" id="summaryContainer">
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rawData = sessionStorage.getItem('currentOrder');
+            const container = document.getElementById('summaryContainer');
+
+            if (!rawData) {
+                container.innerHTML = `
+                    <div class="no-data-msg">
+                        لا توجد بيانات للطلب، يرجى التقديم من خلال إحدى الخدمات أولاً.
+                    </div>
+                    
+                `;
+                return;
+            }
+
+            const data = JSON.parse(rawData);
+
+            let rowsHtml = `
+                <tr>
+                    <th>نوع الخدمة</th>
+                    <td>${data.serviceType || '-'}</td>
+                </tr>
+            `;
+
+            if (data.fullName) {
+                rowsHtml += `
+                    <tr>
+                        <th>الاسم</th>
+                        <td>${data.fullName}</td>
+                    </tr>
+                `;
+            }
+
+            if (data.civilId) {
+                rowsHtml += `
+                    <tr>
+                        <th>الرقم المدني</th>
+                        <td>${data.civilId}</td>
+                    </tr>
+                `;
+            }
+
+            if (data.phone) {
+                rowsHtml += `
+                    <tr>
+                        <th>رقم الهاتف</th>
+                        <td>${data.phone}</td>
+                    </tr>
+                `;
+            }
+
+            if (data.details && data.details.length > 0) {
+                data.details.forEach(item => {
+                    rowsHtml += `
+                        <tr>
+                            <th>${item.label}</th>
+                            <td>${item.value}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            rowsHtml += `
+                <tr class="fee-row">
+                    <th>إجمالي الرسوم</th>
+                    <td>${data.fee || '-'}</td>
+                </tr>
+            `;
+
+            container.innerHTML = `
+                <table class="summary-table">
+                    <tbody>
+                        ${rowsHtml}
+                    </tbody>
+                </table>
+
+                <div class="payment-section">
+                    <span class="payment-title">يرجى اختيار طريقة الدفع</span>
+                    <div class="payment-options">
+                        <div class="payment-card" onclick="processPayment('knet')">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <span>كي نت (K-NET)</span>
+                        </div>
+                        <div class="payment-card" onclick="processPayment('card')">
+                            <i class="fa-brands fa-cc-visa"></i>
+                            <span>فيزا / ماستر كارد</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+            `;
+        });
+
+function processPayment(method) {
+    const rawData = sessionStorage.getItem('currentOrder');
+    
+    if (rawData) {
+        const orderData = JSON.parse(rawData);
+        
+        sessionStorage.setItem('paymentAmount', orderData.fee || '0.000');
+        sessionStorage.setItem('paymentMethod', method);
+    }
+
+    if (method === 'knet') {
+        window.location.href = 'knet.html'; 
+    } else if (method === 'card') {
+        window.location.href = 'card-payment.html'; 
+    }
+}
+    </script>
+
+</body>
+</html>

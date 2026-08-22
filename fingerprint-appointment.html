@@ -280,7 +280,22 @@
     <script>
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('تم تقديم طلب حجز الموعد بنجاح!');
+            const form = e.currentTarget;
+            const details = [
+                { label: 'مركز أخذ البصمة', value: form.center.options[form.center.selectedIndex].text },
+                { label: 'تاريخ الموعد', value: form.appointmentDate.value },
+                { label: 'الوقت المتاح', value: form.appointmentTime.options[form.appointmentTime.selectedIndex].text }
+            ];
+
+            sessionStorage.setItem('currentOrder', JSON.stringify({
+                serviceType: 'حجز موعد البصمة',
+                fullName: form.fullName.value,
+                civilId: sessionStorage.getItem('loginCivilId'),
+                phone: form.phone.value,
+                details: details,
+                fee: '0.50 فلس'
+            }));
+            window.location.href = 'summary.html';
         });
     </script>
 

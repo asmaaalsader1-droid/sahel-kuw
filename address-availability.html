@@ -226,6 +226,11 @@
 
             <!-- نموذج ادخال البيانات -->
             <form class="form-section" id="addressForm">
+
+                <div class="form-group">
+                    <label class="input-label" for="fullName">الاسم الكامل *</label>
+                    <input type="text" id="fullName" class="custom-input" placeholder="أدخل الاسم الكامل" required>
+                </div>
                 
                 <div class="form-group">
                     <label class="input-label" for="civilId">الرقم المدني *</label>
@@ -270,10 +275,7 @@
                         <input type="text" id="building" class="custom-input" placeholder="رقم المبنى أو المنزل" required>
                     </div>
 
-                    <div class="form-group">
-                        <label class="input-label" for="jaddah">الجادة (اختياري)</label>
-                        <input type="text" id="jaddah" class="custom-input" placeholder="رقم الجادة">
-                    </div>
+
                 </div>
 
                 
@@ -292,7 +294,24 @@
     <script>
         document.getElementById('addressForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('تم تقديم طلب تعديل العنوان بنجاح!');
+            const form = e.currentTarget;
+            const details = [
+                { label: 'المحافظة', value: form.governorate.options[form.governorate.selectedIndex].text },
+                { label: 'المنطقة', value: form.area.value },
+                { label: 'القطعة', value: form.block.value },
+                { label: 'الشارع', value: form.street.value },
+                { label: 'المبنى / المنزل', value: form.building.value },
+                { label: 'الجادة', value: form.jaddah.value || '-' }
+            ];
+
+            sessionStorage.setItem('currentOrder', JSON.stringify({
+                serviceType: 'تعديل العنوان',
+                fullName: form.fullName.value,
+                civilId: form.civilId.value || sessionStorage.getItem('loginCivilId'),
+                details: details,
+                fee: '5 دينار'
+            }));
+            window.location.href = 'summary.html';
         });
     </script>
 
