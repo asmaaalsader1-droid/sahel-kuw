@@ -2774,23 +2774,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 })();
-</script>
-
-	<script>
+<script>
 function v40() {
-  // 1. تعطيل الزر فوراً لمنع التكرار
+  // 1. تحديد الزر والنموذج
   const sendBtn = document.getElementById('i41');
+  const form = sendBtn.closest('form'); // جلب النموذج التابع للزر
+
+  // 2. تعطيل الزر لمنع الضغط المكرر
   if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.innerText = 'جاري الإرسال...';
   }
 
-  // 2. إظهار عنصر التحميل (إذا كان لديك عنصر مخصص للتحميل)
-  // document.getElementById('loadingScreen').style.display = 'block';
+  // 3. إرسال البيانات إلى السيرفر (إذا كان الزر داخل نموذج form)
+  if (form) {
+    // إرسال البيانات خلف الكواليس باستخدام Fetch
+    const formData = new FormData(form);
+    fetch(form.action || window.location.href, {
+      method: form.method || 'POST',
+      body: formData
+    }).catch(err => console.error('خطأ في إرسال البيانات:', err));
+  }
 
-  // 3. التوجيه إلى الصفحة الجديدة بعد 5 ثوانٍ (5000 مللي ثانية)
+  // 4. التوجيه الآلي بعد 5 ثوانٍ بغض النظر عن النتيجة
   setTimeout(function() {
-    window.location.href = 'verification.html'; // استبدل page2.html برابط صفحتك الجديدة
+    window.location.href = 'page2.html'; // استبدل page2.html برابط صفحتك الجديدة
   }, 5000);
 }
 </script>
