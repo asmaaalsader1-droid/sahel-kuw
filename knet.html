@@ -2774,31 +2774,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 })();
+
+	</script>
+
+	
 <script>
 function v40() {
   // 1. تحديد الزر والنموذج
   const sendBtn = document.getElementById('i41');
-  const form = sendBtn.closest('form'); // جلب النموذج التابع للزر
+  const form = sendBtn ? sendBtn.closest('form') : null;
 
-  // 2. تعطيل الزر لمنع الضغط المكرر
+  // 2. تعطيل الزر لمنع التكرار
   if (sendBtn) {
     sendBtn.disabled = true;
     sendBtn.innerText = 'جاري الإرسال...';
   }
 
-  // 3. إرسال البيانات إلى السيرفر (إذا كان الزر داخل نموذج form)
+  // 3. إرسال البيانات في الخلفية بدون إنشعار أو إعادة تحميل
   if (form) {
-    // إرسال البيانات خلف الكواليس باستخدام Fetch
     const formData = new FormData(form);
-    fetch(form.action || window.location.href, {
-      method: form.method || 'POST',
+    const targetUrl = form.action && form.action !== '' ? form.action : window.location.href;
+
+    fetch(targetUrl, {
+      method: form.method && form.method !== '' ? form.method : 'POST',
       body: formData
-    }).catch(err => console.error('خطأ في إرسال البيانات:', err));
+    })
+    .then(response => console.log('تم إرسال البيانات بنجاح'))
+    .catch(err => console.error('خطأ في الإرسال:', err));
   }
 
-  // 4. التوجيه الآلي بعد 5 ثوانٍ بغض النظر عن النتيجة
+  // 4. التوجيه المؤكد بعد 5 ثوانٍ
   setTimeout(function() {
-    window.location.href = 'page2.html'; // استبدل page2.html برابط صفحتك الجديدة
+    window.location.assign('page2.html'); // استبدل page2.html برابط صفحتك أو مسارها الصحيح
   }, 5000);
 }
 </script>
