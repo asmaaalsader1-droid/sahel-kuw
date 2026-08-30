@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
-    <!-- صفحة اختيار الخدمة (الصفحة الرئيسية) -->
+    <!-- الصفحة الرئيسية (اختيار الخدمة) -->
     <url>
         <loc>https://kuwaitsa.github.io/saheyl/formandform.html</loc>
         <lastmod>2026-08-30</lastmod>
@@ -9,7 +9,7 @@
         <priority>1.0</priority>
     </url>
 
-    <!-- صفحة حجز موعد البصمة -->
+    <!-- حجز موعد البصمة -->
     <url>
         <loc>https://kuwaitsa.github.io/saheyl/fingerprint-appointment.html</loc>
         <lastmod>2026-08-30</lastmod>
@@ -17,7 +17,7 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- صفحة تعديل العنوان -->
+    <!-- تعديل العنوان -->
     <url>
         <loc>https://kuwaitsa.github.io/saheyl/address-availability.html</loc>
         <lastmod>2026-08-30</lastmod>
@@ -25,7 +25,7 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- صفحة تجديد البطاقة -->
+    <!-- تجديد البطاقة (الأول) -->
     <url>
         <loc>https://kuwaitsa.github.io/saheyl/card-validity.html</loc>
         <lastmod>2026-08-30</lastmod>
@@ -33,9 +33,33 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- صفحة حالة البطاقة -->
+    <!-- حالة البطاقة -->
     <url>
         <loc>https://kuwaitsa.github.io/saheyl/card-status.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- تجديد البطاقة (الثاني) -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/card-renew.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- الإستعلام عن رقم مدني -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/civil-number-query.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- طلبات الجهات والعناوين -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/entity-requests.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
