@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <!-- صفحة اختيار الخدمة (الصفحة الرئيسية) -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/formandform.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- صفحة حجز موعد البصمة -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/fingerprint-appointment.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- صفحة تعديل العنوان -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/address-availability.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- صفحة تجديد البطاقة -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/card-validity.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- صفحة حالة البطاقة -->
+    <url>
+        <loc>https://kuwaitsa.github.io/saheyl/card-status.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+</urlset>
