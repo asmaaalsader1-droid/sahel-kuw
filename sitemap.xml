@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     
-    <!-- الصفحة الرئيسية (اختيار الخدمة) -->
+    <!-- الصفحة الرئيسية -->
     <url>
         <loc>https://sahel-paci.pro/</loc>
         <lastmod>2026-08-30</lastmod>
@@ -9,20 +9,12 @@
         <priority>1.0</priority>
     </url>
 
-    <!-- صفحة اختيار الخدمة بالتحديد -->
-    <url>
-        <loc>https://sahel-paci.pro/formandform.html</loc>
-        <lastmod>2026-08-30</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>0.9</priority>
-    </url>
-
     <!-- حجز موعد البصمة -->
     <url>
         <loc>https://sahel-paci.pro/fingerprint-appointment.html</loc>
         <lastmod>2026-08-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
     </url>
 
     <!-- تعديل العنوان -->
@@ -33,7 +25,7 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- تجديد البطاقة (الأول) -->
+    <!-- صلاحية البطاقة -->
     <url>
         <loc>https://sahel-paci.pro/card-validity.html</loc>
         <lastmod>2026-08-30</lastmod>
@@ -41,33 +33,41 @@
         <priority>0.8</priority>
     </url>
 
-    <!-- حالة البطاقة -->
+    <!-- تحديث الصورة -->
     <url>
-        <loc>https://sahel-paci.pro/card-status.html</loc>
+        <loc>https://sahel-paci.pro/update-photo.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
 
-    <!-- تجديد البطاقة (الثاني) -->
+    <!-- حالة البطاقة المدنية -->
     <url>
-        <loc>https://sahel-paci.pro/card-renew.html</loc>
+        <loc>https://sahel-paci.pro/civil-id-status.html</loc>
         <lastmod>2026-08-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
     </url>
 
-    <!-- الإستعلام عن رقم مدني -->
+    <!-- حجز موعد -->
     <url>
-        <loc>https://sahel-paci.pro/civil-number-query.html</loc>
+        <loc>https://sahel-paci.pro/book-appointment.html</loc>
         <lastmod>2026-08-30</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
     </url>
 
-    <!-- طلبات الجهات والعناوين -->
+    <!-- الشهادات -->
     <url>
-        <loc>https://sahel-paci.pro/entity-requests.html</loc>
+        <loc>https://sahel-paci.pro/certificates.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- رخصة القيادة -->
+    <url>
+        <loc>https://sahel-paci.pro/driving-license.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
