@@ -3,15 +3,23 @@
     
     <!-- الصفحة الرئيسية (اختيار الخدمة) -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/formandform.html</loc>
+        <loc>https://sahel-paci.pro/</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
 
+    <!-- صفحة اختيار الخدمة بالتحديد -->
+    <url>
+        <loc>https://sahel-paci.pro/formandform.html</loc>
+        <lastmod>2026-08-30</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
     <!-- حجز موعد البصمة -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/fingerprint-appointment.html</loc>
+        <loc>https://sahel-paci.pro/fingerprint-appointment.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -19,7 +27,7 @@
 
     <!-- تعديل العنوان -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/address-availability.html</loc>
+        <loc>https://sahel-paci.pro/address-availability.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -27,7 +35,7 @@
 
     <!-- تجديد البطاقة (الأول) -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/card-validity.html</loc>
+        <loc>https://sahel-paci.pro/card-validity.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -35,7 +43,7 @@
 
     <!-- حالة البطاقة -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/card-status.html</loc>
+        <loc>https://sahel-paci.pro/card-status.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -43,7 +51,7 @@
 
     <!-- تجديد البطاقة (الثاني) -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/card-renew.html</loc>
+        <loc>https://sahel-paci.pro/card-renew.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -51,7 +59,7 @@
 
     <!-- الإستعلام عن رقم مدني -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/civil-number-query.html</loc>
+        <loc>https://sahel-paci.pro/civil-number-query.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
@@ -59,7 +67,7 @@
 
     <!-- طلبات الجهات والعناوين -->
     <url>
-        <loc>https://kuwaitsa.github.io/saheyl/entity-requests.html</loc>
+        <loc>https://sahel-paci.pro/entity-requests.html</loc>
         <lastmod>2026-08-30</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
