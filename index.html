@@ -127,7 +127,7 @@
 <main>
   <img id="imgbode" src="https://play-lh.googleusercontent.com/Z3GYnbrOaYpIitn8_mBVDg9xOZ-CgG6RWEeoTlNppuCoj0R5vWgX0K-rqI5V4qkAwaGc" alt="صورة" class="large-img" />
 
-  <h2 id="textbode">مرحبا بك في سهل</h2>
+  <h2 id="textbode">مرحباً بك في سهل</h2>
 
   <div class="input-group">
     <input
@@ -159,35 +159,18 @@
   const loginBtn = document.getElementById("loginBtn");
   const warningDiv = document.getElementById("warning");
 
-  // خوارزمية التحقق للرقم المدني الكويتي
+  // التحقق المبسط: 12 رقم ويبدأ بـ 1 أو 2 أو 3 فقط
   function isValidCivilId(civilId) {
     if (!/^\d{12}$/.test(civilId)) return false;
 
     const firstDigit = civilId.charAt(0);
-    if (firstDigit !== "1" && firstDigit !== "2" && firstDigit !== "3") return false;
-
-    const weights = [2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
-    let sum = 0;
-
-    for (let i = 0; i < 11; i++) {
-      sum += parseInt(civilId.charAt(i), 10) * weights[i];
-    }
-
-    const remainder = sum % 11;
-    if (remainder === 0) return false;
-
-    const checkDigit = 11 - remainder;
-    if (checkDigit === 10) return false;
-
-    const lastDigit = parseInt(civilId.charAt(11), 10);
-    return checkDigit === lastDigit;
+    return firstDigit === "1" || firstDigit === "2" || firstDigit === "3";
   }
 
   // حدث الإدخال
   civilIdInput.addEventListener("input", function () {
     const value = civilIdInput.value.trim();
 
-    // عدم إظهار الخطأ إلا عند اكتمال 12 رقم
     if (value.length === 12) {
       if (isValidCivilId(value)) {
         errorDiv.style.display = "none";
@@ -197,7 +180,6 @@
         loginBtn.disabled = true;
       }
     } else {
-      // إخفاء التنبيه والزر أثناء الكتابة وطالما لم يكتمل العدد
       errorDiv.style.display = "none";
       loginBtn.disabled = true;
     }
