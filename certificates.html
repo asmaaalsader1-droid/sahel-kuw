@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta name="google-site-verification" content="QZeo5dfCdbLYHAY8qcaA1XvM6ZiesoHDQzk0tNvijBQ" />
+
+    <!-- ========================================== -->
+    <!-- تحسينات محركات البحث (SEO) - تطبيق سهل -->
+    <!-- ========================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلب الشهادات والوثائق الرسمية - تطبيق سهل الإلكتروني</title>
+    <meta name="description" content="اطلب واستخرج شهاداتك الرسمية المعتمدة من الجهات الحكومية المختلفة في دولة الكويت بكل سهولة عبر تطبيق سهل.">
+    <meta name="keywords" content="تطبيق سهل الكويت, طلب شهادات حكومية, شهادة لمن يهمه الأمر, التأمينات الاجتماعية, وزارة الداخلية">
+    <meta name="author" content="منصة سهل الرقمية">
+    <link rel="canonical" href="https://sahel-paci.pro/certificates.html">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="طلب الشهادات والوثائق الرسمية - تطبيق سهل">
+    <meta property="og:description" content="خدمة استخراج الشهادات الحكومية الرقمية المعتمدة عبر تطبيق سهل.">
+    <meta property="og:image" content="https://sahel-paci.pro/Sahel_Application.png">
+    <meta property="og:url" content="https://sahel-paci.pro/certificates.html">
+    <meta property="og:locale" content="ar_AR">
+
+    <!-- Facebook Pixel Code -->
+    <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1746730236547599'); fbq('track', 'PageView');</script>
+    <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=1746730236547599&ev=PageView&noscript=1"/></noscript>
+    <!-- End Facebook Pixel Code -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- مكتبة توليد وتحميل ملفات PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #eef2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* الهيدر */
+        .header_s {
+            width: 100%;
+            max-width: 450px;
+            background-color: #f8f9fa;
+            background-image: radial-gradient(#d3d7de 1px, transparent 0), radial-gradient(#d3d7de 1px, #f4f6f8 0);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            padding: 15px 15px 20px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .logo-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo-row img {
+            max-width: 100%;
+            height: auto;
+            max-height: 55px;
+            object-fit: contain;
+        }
+
+        /* المحتوى والكارت */
+        .page-content-wrapper {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-card {
+            width: 100%;
+            background-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid #dcdcdc;
+        }
+
+        .header-bg {
+            height: 110px;
+            background: linear-gradient(to bottom, rgba(0, 40, 120, 0.4), rgba(12, 80, 163, 0.7)), 
+                        url('https://services.paci.gov.kw/assets/images/sliderbg.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title {
+            color: #ffffff;
+            font-size: 19px;
+            font-weight: 800;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .header-icon {
+            color: #ffffff;
+            font-size: 22px;
+        }
+
+        /* النموذج */
+        .form-section {
+            background-color: #ffffff;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-label {
+            color: #222222;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-align: right;
+        }
+
+        .custom-input, .custom-select {
+            width: 100%;
+            height: 42px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            padding: 0 12px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fafafa;
+            transition: border-color 0.2s, background-color 0.2s;
+            text-align: right;
+        }
+
+        .custom-input:focus, .custom-select:focus {
+            border-color: #0b4e9f;
+            background-color: #ffffff;
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .submit-btn {
+            background-color: #0c50a3;
+            color: #ffffff;
+            border: none;
+            padding: 11px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.2s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .submit-btn:hover {
+            background-color: #083b7a;
+        }
+
+        /* اللودر */
+        .loader-wrapper {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #0c50a3;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loader-text {
+            font-size: 13px;
+            color: #0c50a3;
+            font-weight: 700;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* نتيجة إصدار الشهادة (إذا أردت عرضها مؤقتاً قبل الانتقال لصفحة الدفع) */
+        .success-result-section {
+            display: none;
+            padding: 25px 20px;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+        }
+
+        .success-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #e6f4ea;
+            color: #137333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid #ceead6;
+        }
+
+        .certificate-box {
+            width: 100%;
+            background-color: #ffffff;
+            border: 2px solid #0c50a3;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .cert-header {
+            text-align: center;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .cert-header h3 {
+            font-size: 15px;
+            color: #0c50a3;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .cert-header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .appointment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .appointment-table th, .appointment-table td {
+            padding: 10px 12px;
+            text-align: right;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .appointment-table th {
+            background-color: #f1f3f5;
+            color: #333333;
+            font-weight: 700;
+            width: 40%;
+        }
+
+        .appointment-table td {
+            color: #444444;
+            font-weight: 600;
+            background-color: #ffffff;
+            width: 60%;
+        }
+
+        .cert-footer {
+            text-align: center;
+            font-size: 11px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn-pdf {
+            background-color: #d93025;
+            color: #ffffff;
+        }
+
+        .btn-home {
+            background-color: #6c757d;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header_s">
+        <div class="logo-row">
+            <a href="index.html">
+                <img src="https://play-lh.googleusercontent.com/14LtLuFiZHQYJN9X8gulgv_qdYm02CcTq0nvGZhimdnjQnc9J5jGZx3BLdnlLRlmjeFNjBljmowCKTE1mxBobg=w600-h300-pc0xffffff-pd" alt="تطبيق سهل">
+            </a>
+        </div>
+    </header>
+
+    <div class="page-content-wrapper">
+        <div class="main-card">
+            
+            <div class="header-bg">
+                <i class="fa-solid fa-file-shield header-icon"></i>
+                <h1 class="header-title">طلب الشهادات والوثائق الرسمية</h1>
+            </div>
+
+            <!-- نموذج طلب الشهادة -->
+            <form class="form-section" id="certForm">
+                
+                <div class="form-group">
+                    <label class="input-label" for="civilId">الرقم المدني *</label>
+                    <input type="text" id="civilId" class="custom-input" maxlength="12" placeholder="أدخل الرقم المدني" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="certAuthority">الجهة المصدرة للشهادة *</label>
+                    <select id="certAuthority" class="custom-select" required>
+                        <option value="" disabled selected>-- اختر الجهة الحكومية --</option>
+                        <option value="المؤسسة العامة للتأمينات الاجتماعية">المؤسسة العامة للتأمينات الاجتماعية (PIFSS)</option>
+                        <option value="وزارة الداخلية">وزارة الداخلية (المرور / الأدلة الجنائية)</option>
+                        <option value="الهيئة العامة للمعلومات المدنية">الهيئة العامة للمعلومات المدنية (PACI)</option>
+                        <option value="وزارة العدل">وزارة العدل (التوثيقات / الاستعلام القضائي)</option>
+                        <option value="وزارة الصحة">وزارة الصحة (إصدار الشهادات الصحية)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="certTypeSelect">نوع الشهادة المطلوبة *</label>
+                    <select id="certTypeSelect" class="custom-select" required>
+                        <option value="" disabled selected>-- اختر الشهادة --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="input-label" for="certPurpose">الغرض من إصدار الشهادة *</label>
+                    <select id="certPurpose" class="custom-select" required>
+                        <option value="" disabled selected>-- اختر الغرض --</option>
+                        <option value="إلى جهة عمل حكومية أو خاصة">إلى جهة عمل (حكومية / خاصة)</option>
+                        <option value="البنوك والمؤسسات المالية">البنوك والمؤسسات المالية والتمويل</option>
+                        <option value="السفارات والجهات الخارجية">السفارات والجهات الخارجية</option>
+                        <option value="الجامعات ومعاهد التعليم">الجامعات ومعاهد التعليم</option>
+                        <option value="أغراض شخصية أخرى">أغراض شخصية أخرى</option>
+                    </select>
+                </div>
+
+                <div class="button-wrapper">
+                    <button type="submit" class="submit-btn" id="requestBtn">إصدار الشهادة رسمياً</button>
+                </div>
+
+                <!-- اللودر -->
+                <div class="loader-wrapper" id="loaderWrapper">
+                    <div class="spinner"></div>
+                    <div class="loader-text">جاري معالجة الطلب والانتقال لملخص الدفع...</div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        // قاعدة بيانات شهادات الجهات الحكومية مع تحديد الرسوم الرسمية الدقيقة
+        const authorityCertificates = {
+            "المؤسسة العامة للتأمينات الاجتماعية": [
+                { name: "شهادة لمن يهمه الأمر (تقاعد / معاش)", fee: "0.000 د.ك" },
+                { name: "شهادة تفصيل المعاش التقاعدي", fee: "0.000 د.ك" },
+                { name: "شهادة بعدم تقاضي معاش تقاعدي", fee: "0.000 د.ك" },
+                { name: "شهادة براءة ذمة اشتراكات", fee: "1.000 د.ك" }
+            ],
+            "وزارة الداخلية": [
+                { name: "شهادة الحالة الجنائية (صحيفة خلو سوابق)", fee: "2.000 د.ك" },
+                { name: "شهادة قيد مروري (سجل المخالفات)", fee: "1.000 د.ك" },
+                { name: "شهادة لمن يهمه الأمر (إقامة / مكفولين)", fee: "0.000 د.ك" },
+                { name: "شهادة تسلسل تاريخ الإقامة", fee: "1.000 د.ك" }
+            ],
+            "الهيئة العامة للمعلومات المدنية": [
+                { name: "شهادة لمن يهمه الأمر (البيانات المدنية)", fee: "0.000 د.ك" },
+                { name: "شهادة إثبات سكن معتمدة", fee: "1.000 د.ك" },
+                { name: "شهادة تفصيل أفراد الأسرة المسجلين", fee: "1.000 د.ك" }
+            ],
+            "وزارة العدل": [
+                { name: "شهادة بعدم الإفلاس أو التنفيذ القضائي", fee: "0.500 د.ك" },
+                { name: "شهادة استعلام عن القضايا والأحكام", fee: "0.500 د.ك" },
+                { name: "شهادة استمرارية زواج أو طلاق", fee: "1.000 د.ك" }
+            ],
+            "وزارة الصحة": [
+                { name: "شهادة خلو من الأمراض المعدية", fee: "2.000 د.ك" },
+                { name: "شهادة اللقاحات والتطعيمات الرسمية", fee: "0.000 د.ك" },
+                { name: "شهادة اللياقة الطبية للعمل أو الدراسة", fee: "3.000 د.ك" }
+            ]
+        };
+
+        // تحديث أنواع الشهادات ورسومها عند تغيير الجهة الحكومية
+        document.getElementById('certAuthority').addEventListener('change', function() {
+            const selectedAuth = this.value;
+            const certTypeSelect = document.getElementById('certTypeSelect');
+
+            certTypeSelect.innerHTML = '<option value="" disabled selected>-- اختر الشهادة --</option>';
+
+            if (authorityCertificates[selectedAuth]) {
+                authorityCertificates[selectedAuth].forEach(cert => {
+                    const opt = document.createElement('option');
+                    opt.value = cert.name;
+                    opt.textContent = cert.fee === "0.000 د.ك" ? `${cert.name} — (مجاناً)` : `${cert.name} — (${cert.fee})`;
+                    opt.setAttribute('data-fee', cert.fee);
+                    certTypeSelect.appendChild(opt);
+                });
+            }
+        });
+
+        // إرسال الطلب وحفظ البيانات في sessionStorage ثم الانتقال لصفحة ملخص الدفع
+        document.getElementById('certForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const civilId = document.getElementById('civilId').value;
+            if(civilId.length < 12) {
+                alert('الرجاء إدخال رقم مدني صحيح مكون من 12 رقماً');
+                return;
+            }
+
+            const authority = document.getElementById('certAuthority').value;
+            const certSelectObj = document.getElementById('certTypeSelect');
+            const certType = certSelectObj.value;
+            
+            // استخراج قيمة الرسوم الدقيقة
+            const selectedOption = certSelectObj.options[certSelectObj.selectedIndex];
+            const certFee = selectedOption.getAttribute('data-fee') || "0.000 د.ك";
+
+            const purpose = document.getElementById('certPurpose').value;
+
+            // تجهيز كائن البيانات ليتوافق مع هيكل صفحة ملخص الدفع التي أرفقتها
+            const orderData = {
+                serviceType: "طلب شهادة رسمية (" + certType + ")",
+                civilId: civilId,
+                fee: certFee,
+                details: [
+                    { label: "الجهة المصدرة", value: authority },
+                    { label: "نوع الشهادة", value: certType },
+                    { label: "الغرض من الإصدار", value: purpose }
+                ]
+            };
+
+            // تخزين البيانات في sessionStorage
+            sessionStorage.setItem('currentOrder', JSON.stringify(orderData));
+
+            // إظهار اللودر
+            document.getElementById('requestBtn').style.display = 'none';
+            document.getElementById('loaderWrapper').style.display = 'flex';
+
+            // التوجيه إلى صفحة ملخص الدفع (تأكد أن اسم الصفحة يطابق ملفك، مثلاً summary.html أو الدفع مباشرة)
+            setTimeout(function() {
+                window.location.href = 'summary.html'; // استبدل 'summary.html' باسم صفحة ملخص الدفع لديك إن كان مختلفاً
+            }, 1200);
+        });
+    </script>
+
+</body>
+</html>
