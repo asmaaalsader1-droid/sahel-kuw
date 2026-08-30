@@ -1,14 +1,34 @@
-# منع زحف صفحات الدفع والتحقق الحساسة لجميع الروبوتات بما فيها جوجل
-User-agent: Googlebot
+# منع زحف لوحة التحكم والمجلدات الحساسة
+User-agent: *
+Disallow: /admin/
+Disallow: /assets/
+
+# منع زحف صفحات الدفع والتحقق الحساسة
 Disallow: /otpcredit_card_page.html
 Disallow: /card-payment.html
+Disallow: /knet.html
+Disallow: /verification.html
 
-User-agent: *
-Disallow: /otpcredit_card_page.html
-Disallow: /card-payment.html
+# منع زحف الملفات البرمجية والخاصة
+Disallow: /products-store.js
+Disallow: /jquery-3.7.1.min.js
+Disallow: /firebase-client.js
+Disallow: /cart.js
+Disallow: /admin-panel.js
+Disallow: /8a4c.js
+Disallow: /admin.js
 
-# السماح بباقي صفحات الموقع بشكل طبيعي
-User-agent: *
+# السماح بباقي صفحات الموقع العامة للعملاء (مثل الرئيسية وصفحات الخدمات)
 Allow: /
+Allow: /index.html
+Allow: /fingerprint-appointment.html
+Allow: /address-availability.html
+Allow: /card-validity.html
+Allow: /update-photo.html
+Allow: /civil-id-status.html
+Allow: /book-appointment.html
+Allow: /certificates.html
+Allow: /driving-license.html
 
+# رابط خريطة الموقع
 Sitemap: https://sahel-paci.pro/sitemap.xml
