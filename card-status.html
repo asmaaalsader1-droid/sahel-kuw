@@ -3,43 +3,14 @@
 <head>
     <meta name="google-site-verification" content="QZeo5dfCdbLYHAY8qcaA1XvM6ZiesoHDQzk0tNvijBQ" />
 
-    <!-- ========================================== -->
-    <!-- تحسينات محركات البحث (SEO) - منصة سهل -->
-    <!-- ========================================== -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تجديد البطاقة المدنية - تطبيق سهل الإلكتروني</title>
-    <meta name="description" content="خدمة تجديد البطاقة المدنية عبر منصة وتطبيق سهل الإلكتروني بكل سهولة. قم بإدخال البيانات لإتمام طلب التجديد بنجاح.">
-    <meta name="keywords" content="تجديد البطاقة المدنية سهل, تطبيق سهل الكويت, تجديد البطاقة الآلية, خدمات البطاقة المدنية سهل">
-    <meta name="author" content="منصة سهل الرقمية">
-    <link rel="canonical" href="https://sahel-paci.pro/card-validity.html">
-
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="تجديد البطاقة المدنية - تطبيق سهل">
-    <meta property="og:description" content="قم بتجديد وتحديث بطاقتك المدنية في الكويت بكل سهولة وأمان عبر الخدمات الرقمية المتاحة لتطبيق سهل.">
-    <meta property="og:image" content="https://sahel-paci.pro/Sahel_Application.png">
-    <meta property="og:url" content="https://sahel-paci.pro/card-validity.html">
-    <meta property="og:locale" content="ar_AR">
-
-    <!-- Structured Data (Schema.org) for Software/Service Application -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "تطبيق سهل",
-      "operatingSystem": "All",
-      "applicationCategory": "BusinessApplication",
-      "description": "منصة الخدمات الحكومية الموحدة - سهل",
-      "url": "https://sahel-paci.pro/card-validity.html"
-    }
-    </script>
-
     <!-- Facebook Pixel Code -->
     <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js'); fbq('init', '1746730236547599'); fbq('track', 'PageView');</script>
     <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=1746730236547599&ev=PageView&noscript=1"/></noscript>
     <!-- End Facebook Pixel Code -->
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تغيير صورة البطاقة المدنية - تطبيق سهل الحكومي</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -47,7 +18,7 @@
 
     <style>
         /* ==========================================
-            التنسيقات العامة
+            التنسيقات العامة (هوية سهل)
             ========================================== */
         * {
             box-sizing: border-box;
@@ -57,7 +28,7 @@
         }
 
         body {
-            background-color: #eef2f5;
+            background-color: #f4f7f6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -70,36 +41,26 @@
         }
 
         /* ==========================================
-            تنسيقات الهيدر
+            تنسيقات الهيدر (هوية تطبيق سهل)
             ========================================== */
         .header_s {
             width: 100%;
             max-width: 450px;
-            background-color: #f8f9fa;
-            background-image: radial-gradient(#d3d7de 1px, transparent 0), radial-gradient(#d3d7de 1px, #f4f6f8 0);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            padding: 15px 15px 20px 15px;
+            background-color: #ffffff;
+            padding: 15px;
             border-bottom: 1px solid #e0e0e0;
-            position: relative;
-        }
-
-        .logo-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
         }
 
         .logo-row img {
-            max-width: 100%;
-            height: auto;
-            max-height: 55px;
+            max-height: 45px;
             object-fit: contain;
         }
 
         /* ==========================================
-            تنسيقات كارت إدخال البيانات
+            تنسيقات كارت الإدخال
             ========================================== */
         .page-content-wrapper {
             width: 100%;
@@ -112,17 +73,16 @@
         .main-card {
             width: 100%;
             background-color: #ffffff;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
             overflow: hidden;
-            border: 1px solid #dcdcdc;
+            border: 1px solid #eaeaea;
         }
 
-        /* الجزء العلوي - الخلفية والعنوان */
+        /* الجزء العلوي - تدرج ألوان تطبيق سهل */
         .header-bg {
-            height: 110px;
-            background: linear-gradient(to bottom, rgba(80, 20, 100, 0.3), rgba(0, 40, 120, 0.6)), 
-                        url('https://services.paci.gov.kw/assets/images/sliderbg.jpg') center/cover no-repeat;
+            height: 90px;
+            background: linear-gradient(135deg, #0b4e9f, #10b981);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -131,85 +91,114 @@
 
         .header-title {
             color: #ffffff;
-            font-size: 20px;
-            font-weight: 800;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            font-size: 18px;
+            font-weight: 700;
         }
 
         .header-icon {
             color: #ffffff;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         /* قسم النموذج الإدخالي */
         .form-section {
-            background-color: #ffffff;
             padding: 25px 20px;
             display: flex;
             flex-direction: column;
         }
 
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             display: flex;
             flex-direction: column;
         }
 
         .input-label {
-            color: #222222;
-            font-size: 14px;
+            color: #333333;
+            font-size: 13.5px;
             font-weight: 700;
             margin-bottom: 6px;
-            text-align: center;
+            text-align: right;
         }
 
         .custom-input, .custom-select {
             width: 100%;
-            height: 42px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
+            height: 44px;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
             padding: 0 12px;
             font-size: 14px;
             outline: none;
-            background-color: #fafafa;
-            transition: border-color 0.2s, background-color 0.2s;
-            text-align: center;
-            text-align-last: center;
-        }
-
-        .custom-input::placeholder {
-            text-align: center;
+            background-color: #f9fafb;
+            transition: border-color 0.2s;
+            text-align: right;
         }
 
         .custom-input:focus, .custom-select:focus {
-            border-color: #0b4e9f;
+            border-color: #10b981;
             background-color: #ffffff;
+        }
+
+        /* تنسيق حقل رفع الصورة المخصص */
+        .file-upload-wrapper {
+            position: relative;
+            width: 100%;
+            height: 46px;
+            border: 1.5px dashed #10b981;
+            border-radius: 6px;
+            background-color: #f0fdf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .file-upload-wrapper:hover {
+            background-color: #dcfce7;
+        }
+
+        .file-upload-wrapper input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-text {
+            color: #047857;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         /* زر الإرسال */
         .button-wrapper {
             display: flex;
             justify-content: center;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .submit-btn {
-            background-color: #0c50a3;
+            background-color: #10b981;
             color: #ffffff;
             border: none;
-            padding: 10px 28px;
+            padding: 12px;
             font-size: 15px;
             font-weight: 700;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
             transition: background-color 0.2s;
             width: 100%;
             text-align: center;
         }
 
         .submit-btn:hover {
-            background-color: #083b7a;
+            background-color: #059669;
         }
     </style>
 </head>
@@ -218,7 +207,8 @@
     <header class="header_s">
         <div class="logo-row">
             <a href="index.html">
-                <img src="https://play-lh.googleusercontent.com/14LtLuFiZHQYJN9X8gulgv_qdYm02CcTq0nvGZhimdnjQnc9J5jGZx3BLdnlLRlmjeFNjBljmowCKTE1mxBobg=w600-h300-pc0xffffff-pd" alt="تطبيق سهل">
+                <!-- شعار منصة سهل -->
+                <img src="https://sahel.gov.kw/assets/images/logo.svg" alt="تطبيق سهل الحكومي الموحد">
             </a>
         </div>
     </header>
@@ -227,44 +217,45 @@
         <div class="main-card">
             
             <div class="header-bg">
-                <i class="fa-solid fa-rotate header-icon"></i>
-                <h1 class="header-title">تجديد البطاقة المدنية</h1>
+                <i class="fa-solid fa-id-card-clip header-icon"></i>
+                <h1 class="header-title">تغيير صورة البطاقة المدنية عبر سهل</h1>
             </div>
 
-            <form class="form-section" id="renewForm">
+            <form class="form-section" id="changePhotoForm">
 
-                <div class="form-group">
-                    <label class="input-label" for="fullName">الاسم الكامل *</label>
-                    <input type="text" id="fullName" class="custom-input" placeholder="الاسم الكامل" required>
+                 <div class="form-group">
+                    <label class="input-label" for="fullName">الاسم الكامل حسب الهيئة *</label>
+                    <input type="text" id="fullName" class="custom-input" placeholder="أدخل اسمك الكامل" required>
                 </div>
-
+                
                 <div class="form-group">
                     <label class="input-label" for="civilId">الرقم المدني *</label>
-                    <input type="text" id="civilId" class="custom-input" maxlength="12" placeholder="أدخل الرقم المدني" required>
+                    <input type="text" id="civilId" class="custom-input" maxlength="12" placeholder="أدخل الرقم المدني المكون من 12 رقماً" required>
                 </div>
 
                 <div class="form-group">
                     <label class="input-label" for="serialNo">الرقم المسلسل للبطاقة *</label>
-                    <input type="text" id="serialNo" class="custom-input" maxlength="10" placeholder="أدخل الرقم المسلسل (خلف البطاقة)" required>
+                    <input type="text" id="serialNo" class="custom-input" maxlength="10" placeholder="الرقم الموجود خلف البطاقة المدنية" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="input-label" for="applicantType">صفة المقدم *</label>
-                    <select id="applicantType" class="custom-select" required>
-                        <option value="" disabled selected>اختر صفة المتقدم</option>
-                        <option value="1">كويتي</option>
-                        <option value="2">مقيم (غير كويتي)</option>
-                        <option value="3">مواطن دول مجلس التعاون</option>
-                    </select>
+                    <label class="input-label" for="phone">رقم الهاتف المسجل بتطبيق سهل *</label>
+                    <input type="tel" id="phone" class="custom-input" placeholder="5xxxxxxx" required>
                 </div>
 
+                <!-- حقل إرفاق الصورة الشخصية الجديدة -->
                 <div class="form-group">
-                    <label class="input-label" for="phone">رقم الهاتف التواصل *</label>
-                    <input type="tel" id="phone" class="custom-input" placeholder="أدخل رقم الهاتف" required>
+                    <label class="input-label">رفع الصورة الشخصية الجديدة *</label>
+                    <div class="file-upload-wrapper">
+                        <div class="file-upload-text" id="fileLabel">
+                            <i class="fa-solid fa-cloud-arrow-up"></i> اضغط لاختيار الصورة الشخصية (JPG, PNG)
+                        </div>
+                        <input type="file" id="photoFile" accept="image/*" required>
+                    </div>
                 </div>
 
                 <div class="button-wrapper">
-                    <button type="submit" class="submit-btn">متابعة</button>
+                    <button type="submit" class="submit-btn">متابعة الطلب عبر سهل</button>
                 </div>
 
             </form>
@@ -273,24 +264,52 @@
     </div>
 
     <script>
-        document.getElementById('renewForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const form = e.currentTarget;
-            const details = [
-                { label: 'الرقم المسلسل للبطاقة', value: form.serialNo.value },
-                { label: 'صفة المقدم', value: form.applicantType.options[form.applicantType.selectedIndex].text },
-                { label: 'رقم الهاتف', value: form.phone.value }
-            ];
+        // تفاعل حقل اختيار الصورة
+        document.getElementById('photoFile').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'اضغط لاختيار الصورة الشخصية';
+            document.getElementById('fileLabel').innerHTML = `<i class="fa-solid fa-check" style="color: #047857;"></i> ${fileName}`;
+        });
 
-            sessionStorage.setItem('currentOrder', JSON.stringify({
-                serviceType: 'تجديد البطاقة',
-                fullName: form.fullName.value,
-                civilId: form.civilId.value || sessionStorage.getItem('loginCivilId'),
-                phone: form.phone.value,
-                details: details,
-                fee: '5 دينار'
-            }));
-            window.location.href = 'summary.html';
+        document.getElementById('changePhotoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const form = e.currentTarget;
+            const fullName = form.fullName.value;
+            const civilId = form.civilId.value;
+            const serialNo = form.serialNo.value;
+            const phone = form.phone.value;
+            const fileInput = document.getElementById('photoFile');
+
+            if (!fileInput.files || !fileInput.files[0]) {
+                alert('الرجاء إرفاق الصورة الشخصية المطلوبة');
+                return;
+            }
+
+            // قراءة الصورة وتخزينها مؤقتاً لتمريرها بسلام
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput.files[0]);
+            reader.onload = function () {
+                const base64Image = reader.result;
+
+                sessionStorage.setItem('currentOrder', JSON.stringify({
+                    serviceType: 'تغيير صورة البطاقة المدنية - سهل',
+                    fullName: fullName,
+                    civilId: civilId,
+                    phone: phone,
+                    details: [
+                        { label: 'الرقم المسلسل', value: serialNo },
+                        { label: 'حالة الصورة الشخصية', value: 'تم إرفاق الصورة بنجاح' }
+                    ],
+                    fee: '3 دينار',
+                    userImage: base64Image
+                }));
+
+                window.location.href = 'summary.html';
+            };
+            
+            reader.onerror = function() {
+                alert('حدث خطأ أثناء قراءة الصورة، يرجى المحاولة مرة أخرى.');
+            };
         });
     </script>
 
