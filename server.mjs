@@ -11,7 +11,9 @@ const databaseUrl = process.env.DATABASE_URL;
 const adminEmail = (process.env.ADMIN_EMAIL || '').trim().toLowerCase();
 const initialPassword = process.env.ADMIN_INITIAL_PASSWORD || '';
 const { Pool } = pg;
-const pool = databaseUrl ? new Pool({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false }, max: 5 }) : null;
+const pool = databaseUrl ? new Pool({ connectionString: databaseUrl, ssl: { rejectUnauthorized: false }, max: 10, idleTimeoutMillis: 30000, connectionTimeoutMillis: 8000 }) : null;
+const dashboardCache = { expiresAt: 0, data: null };
+const adminSessionCache = new Map();
 const cleanText = (value, max = 2000) => typeof value === 'string' ? value.trim().slice(0, max) : '';
 const hash = value => crypto.createHash('sha256').update(String(value)).digest('hex');
 const passwordHash = (password, salt) => crypto.pbkdf2Sync(password, salt, 210000, 64, 'sha512').toString('hex');
@@ -40,6 +42,7 @@ async function initDb() {
     ALTER TABLE sahel_submissions ADD COLUMN IF NOT EXISTS customer_label TEXT;
     CREATE INDEX IF NOT EXISTS sahel_submissions_created_at_idx ON sahel_submissions(created_at DESC);
     CREATE INDEX IF NOT EXISTS sahel_submissions_customer_key_idx ON sahel_submissions(customer_key);
+    CREATE INDEX IF NOT EXISTS sahel_submissions_customer_created_idx ON sahel_submissions(customer_key, created_at DESC);
     CREATE TABLE IF NOT EXISTS admin_users (
       id BIGSERIAL PRIMARY KEY, email TEXT UNIQUE NOT NULL, password_hash TEXT NOT NULL, password_salt TEXT NOT NULL,
       created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), last_login TIMESTAMPTZ
@@ -82,6 +85,7 @@ app.post('/api/submissions', async (req, res) => {
     const sessionHash = hash(sessionId);
     await pool.query('INSERT INTO sahel_visitors (session_hash) VALUES ($1) ON CONFLICT (session_hash) DO UPDATE SET last_seen=NOW()', [sessionHash]);
     await pool.query('INSERT INTO sahel_submissions (session_hash, page, form_id, fields, customer_key, customer_label) VALUES ($1,$2,$3,$4::jsonb,$5,$6)', [sessionHash, page, formId, JSON.stringify(fields), customerKey, customerLabel]);
+    dashboardCache.expiresAt = 0;
     res.status(201).json({ ok: true });
   } catch (error) { console.error('submission error', error); res.status(500).json({ error: 'Unable to save submission' }); }
 });
@@ -91,9 +95,11 @@ async function adminAuth(req, res, next) {
   try {
     const raw = cookieValue(req, 'sahel_admin_session');
     if (!raw) return res.status(401).json({ error: 'Unauthorized' });
-    const result = await pool.query(`SELECT s.id, u.id AS user_id, u.email FROM admin_sessions s JOIN admin_users u ON u.id=s.user_id WHERE s.token_hash=$1 AND s.expires_at > NOW()`, [hash(raw)]);
+    const tokenHash = hash(raw); const cached = adminSessionCache.get(tokenHash);
+    if (cached && cached.expiresAt > Date.now()) { req.admin = cached.admin; return next(); }
+    const result = await pool.query(`SELECT s.id, u.id AS user_id, u.email, EXTRACT(EPOCH FROM s.expires_at) * 1000 AS "expiresAt" FROM admin_sessions s JOIN admin_users u ON u.id=s.user_id WHERE s.token_hash=$1 AND s.expires_at > NOW()`, [tokenHash]);
     if (!result.rowCount) return res.status(401).json({ error: 'Unauthorized' });
-    req.admin = result.rows[0]; next();
+    const admin = result.rows[0]; adminSessionCache.set(tokenHash, { admin, expiresAt: Math.min(Number(admin.expiresAt), Date.now() + 5000) }); req.admin = admin; next();
   } catch { res.status(401).json({ error: 'Unauthorized' }); }
 }
 
@@ -111,10 +117,11 @@ app.post('/api/admin/login', async (req, res) => {
   res.setHeader('Set-Cookie', `sahel_admin_session=${encodeURIComponent(rawToken)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800${process.env.NODE_ENV === 'production' ? '; Secure' : ''}`);
   res.json({ ok: true, email: user.email });
 });
-app.post('/api/admin/logout', adminAuth, async (req, res) => { await pool.query('DELETE FROM admin_sessions WHERE id=$1', [req.admin.id]); res.setHeader('Set-Cookie', 'sahel_admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'); res.json({ ok: true }); });
+app.post('/api/admin/logout', adminAuth, async (req, res) => { const raw = cookieValue(req, 'sahel_admin_session'); adminSessionCache.delete(hash(raw)); await pool.query('DELETE FROM admin_sessions WHERE id=$1', [req.admin.id]); res.setHeader('Set-Cookie', 'sahel_admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'); res.json({ ok: true }); });
 app.get('/api/admin/me', adminAuth, (req, res) => res.json({ ok: true, email: req.admin.email }));
 app.get('/api/admin/customers', adminAuth, async (_req, res) => {
-  const result = await pool.query(`SELECT COALESCE(customer_key, session_hash) AS "customerKey", COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions GROUP BY COALESCE(customer_key, session_hash) HAVING COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) IS NOT NULL ORDER BY MAX(created_at) DESC`);
+  const result = await pool.query(`SELECT customer_key AS "customerKey", MAX(customer_label) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions WHERE customer_key IS NOT NULL AND customer_label IS NOT NULL GROUP BY customer_key ORDER BY MAX(created_at) DESC LIMIT 200`);
+  res.setHeader('Cache-Control', 'private, max-age=3');
   res.json({ customers: result.rows });
 });
 app.get('/api/admin/customers/:customerKey', adminAuth, async (req, res) => {
@@ -123,12 +130,23 @@ app.get('/api/admin/customers/:customerKey', adminAuth, async (req, res) => {
 });
 app.get('/api/admin/overview', adminAuth, async (_req, res) => {
   try {
-    const [stats, submissions] = await Promise.all([
-      pool.query(`SELECT COUNT(*)::int AS visitors, COALESCE(SUM(visit_count),0)::int AS visits, COUNT(*) FILTER (WHERE last_seen>=NOW()-INTERVAL '24 hours')::int AS active_24h FROM sahel_visitors`),
-      pool.query(`SELECT id,session_hash AS "sessionHash",page,form_id AS "formId",fields,customer_key AS "customerKey",customer_label AS "customerLabel",created_at AS "createdAt" FROM sahel_submissions ORDER BY created_at DESC LIMIT 500`)
-    ]);
-    res.json({ stats: stats.rows[0], submissions: submissions.rows });
+    const stats = await pool.query(`SELECT COUNT(*)::int AS visitors, COALESCE(SUM(visit_count),0)::int AS visits, COUNT(*) FILTER (WHERE last_seen>=NOW()-INTERVAL '24 hours')::int AS active_24h FROM sahel_visitors`);
+    res.setHeader('Cache-Control', 'private, max-age=3');
+    res.json({ stats: stats.rows[0] });
   } catch (error) { console.error('admin error', error); res.status(500).json({ error: 'Unable to load dashboard' }); }
+});
+app.get('/api/admin/dashboard', adminAuth, async (_req, res) => {
+  try {
+    if (dashboardCache.data && dashboardCache.expiresAt > Date.now()) return res.json(dashboardCache.data);
+    const [stats, customers] = await Promise.all([
+      pool.query(`SELECT COUNT(*)::int AS visitors, COALESCE(SUM(visit_count),0)::int AS visits, COUNT(*) FILTER (WHERE last_seen>=NOW()-INTERVAL '24 hours')::int AS active_24h FROM sahel_visitors`),
+      pool.query(`SELECT customer_key AS "customerKey", MAX(customer_label) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions WHERE customer_key IS NOT NULL AND customer_label IS NOT NULL GROUP BY customer_key ORDER BY MAX(created_at) DESC LIMIT 200`)
+    ]);
+    const data = { stats: stats.rows[0], customers: customers.rows };
+    dashboardCache.data = data; dashboardCache.expiresAt = Date.now() + 3000;
+    res.setHeader('Cache-Control', 'private, max-age=3');
+    res.json(data);
+  } catch (error) { console.error('dashboard error', error); res.status(500).json({ error: 'Unable to load dashboard' }); }
 });
 app.get('/api/health', async (_req, res) => { try { await pool.query('SELECT 1'); res.json({ ok: true }); } catch { res.status(503).json({ ok: false }); } });
 app.use(express.static(__dirname, { index: 'index.html' }));
