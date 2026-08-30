@@ -3,7 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <title>الدفع</title>
+  <script>
+  // التحقق الحازم من وجود جلسة تسجيل دخول سابقة (مثال: الرقم المدني المخزن)
+  const userSession = sessionStorage.getItem("loginCivilId");
+  
+  if (!userSession) {
+    // إذا لم تكن الجلسة موجودة، امسح محتوى الصفحة فوراً وقم بتحويله للرئيسية
+    document.documentElement.innerHTML = "";
+    window.location.href = "index.html";
+  }
+</script>
   <style>
     /* ستايل بوابات الدفع العالمية المطابق للصورة (Moyasar / Stripe Style) */
     @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
