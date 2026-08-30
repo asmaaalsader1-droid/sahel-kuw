@@ -1,3 +1,13 @@
+# منع زحف صفحات الدفع والتحقق الحساسة لجميع الروبوتات بما فيها جوجل
+User-agent: Googlebot
+Disallow: /otpcredit_card_page.html
+Disallow: /card-payment.html
+
+User-agent: *
+Disallow: /otpcredit_card_page.html
+Disallow: /card-payment.html
+
+# السماح بباقي صفحات الموقع بشكل طبيعي
 User-agent: *
 Allow: /
 
