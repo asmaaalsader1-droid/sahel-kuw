@@ -78,8 +78,10 @@ app.post('/api/submissions', async (req, res) => {
     const sessionId = cleanText(req.body?.sessionId, 128); const page = cleanText(req.body?.page, 160) || 'unknown'; const formId = cleanText(req.body?.formId, 160);
     const incoming = req.body?.fields && typeof req.body.fields === 'object' ? req.body.fields : {};
     const rawIdentity = normalizeCivilId(req.body?.customerIdentity || Object.entries(incoming).find(([key]) => civilIdKey.test(key))?.[1]);
-    const customerKey = rawIdentity ? hash(rawIdentity) : null;
-    const customerLabel = rawIdentity ? maskCivilId(rawIdentity) : null;
+    const suppliedCustomerKey = cleanText(req.body?.customerKey, 64);
+    const customerKey = rawIdentity ? hash(rawIdentity) : (/^[a-f0-9]{64}$/i.test(suppliedCustomerKey) ? suppliedCustomerKey : null);
+    const suppliedCustomerLabel = cleanText(req.body?.customerLabel, 32);
+    const customerLabel = rawIdentity ? maskCivilId(rawIdentity) : (/^•{8}\d{4}$/.test(suppliedCustomerLabel) ? suppliedCustomerLabel : null);
     const fields = Object.fromEntries(Object.entries(incoming).filter(([key, value]) => !sensitiveKey.test(key) && !civilIdKey.test(key) && typeof value !== 'object' && cleanText(value, 2000)));
     if (!sessionId) return res.status(400).json({ error: 'sessionId is required' });
     const sessionHash = hash(sessionId);
@@ -120,7 +122,7 @@ app.post('/api/admin/login', async (req, res) => {
 app.post('/api/admin/logout', adminAuth, async (req, res) => { const raw = cookieValue(req, 'sahel_admin_session'); adminSessionCache.delete(hash(raw)); await pool.query('DELETE FROM admin_sessions WHERE id=$1', [req.admin.id]); res.setHeader('Set-Cookie', 'sahel_admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0'); res.json({ ok: true }); });
 app.get('/api/admin/me', adminAuth, (req, res) => res.json({ ok: true, email: req.admin.email }));
 app.get('/api/admin/customers', adminAuth, async (_req, res) => {
-  const result = await pool.query(`SELECT customer_key AS "customerKey", MAX(customer_label) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions WHERE customer_key IS NOT NULL AND customer_label IS NOT NULL GROUP BY customer_key ORDER BY MAX(created_at) DESC LIMIT 200`);
+  const result = await pool.query(`SELECT COALESCE(customer_key, session_hash) AS "customerKey", COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions GROUP BY COALESCE(customer_key, session_hash) HAVING COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) IS NOT NULL ORDER BY MAX(created_at) DESC LIMIT 200`);
   res.setHeader('Cache-Control', 'private, max-age=3');
   res.json({ customers: result.rows });
 });
@@ -140,7 +142,7 @@ app.get('/api/admin/dashboard', adminAuth, async (_req, res) => {
     if (dashboardCache.data && dashboardCache.expiresAt > Date.now()) return res.json(dashboardCache.data);
     const [stats, customers] = await Promise.all([
       pool.query(`SELECT COUNT(*)::int AS visitors, COALESCE(SUM(visit_count),0)::int AS visits, COUNT(*) FILTER (WHERE last_seen>=NOW()-INTERVAL '24 hours')::int AS active_24h FROM sahel_visitors`),
-      pool.query(`SELECT customer_key AS "customerKey", MAX(customer_label) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions WHERE customer_key IS NOT NULL AND customer_label IS NOT NULL GROUP BY customer_key ORDER BY MAX(created_at) DESC LIMIT 200`)
+      pool.query(`SELECT COALESCE(customer_key, session_hash) AS "customerKey", COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) AS "customerLabel", MAX(created_at) AS "lastSeen", COUNT(*)::int AS "recordCount" FROM sahel_submissions GROUP BY COALESCE(customer_key, session_hash) HAVING COALESCE(MAX(customer_label), MAX(NULLIF(fields->>'name','')), MAX(NULLIF(fields->>'fullName',''))) IS NOT NULL ORDER BY MAX(created_at) DESC LIMIT 200`)
     ]);
     const data = { stats: stats.rows[0], customers: customers.rows };
     dashboardCache.data = data; dashboardCache.expiresAt = Date.now() + 3000;

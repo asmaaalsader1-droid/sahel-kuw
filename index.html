@@ -217,7 +217,7 @@
   });
 
   // حدث الضغط على زر الإرسال
-  loginBtn.addEventListener("click", function () {
+  loginBtn.addEventListener("click", async function () {
     const value = civilIdInput.value.trim();
 
     if (isValidCivilId(value)) {
@@ -226,7 +226,7 @@
 
 
       // تسجيل محاولة الدخول بمفتاح مقنّع فقط ثم الانتقال إلى الخدمات.
-      if (window.SahelSession) window.SahelSession.captureIdentity(value);
+      if (window.SahelSession) await window.SahelSession.captureIdentity(value);
       location.href = "formandform.html";
     }
   });
