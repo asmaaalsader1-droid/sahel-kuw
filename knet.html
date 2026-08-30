@@ -2812,39 +2812,32 @@ document.addEventListener('DOMContentLoaded', function() {
 </script> 
 
 <script>
-(function() {
-    // التأكد من أن السكربت يعمل بمجرد تحميل عناصر الصفحة
-    window.addEventListener('DOMContentLoaded', function() {
-        var overlay = document.getElementById('bankConnectingOverlay');
-        
-        // البحث عن زر الإرسال أو زر الدفع في الصفحة (يمكنك تغيير الـ selector حسب اسم الزر لديك مثل type="submit" أو ID معين)
+(function () {
+    // دالة محاكاة رسائل لوحة الإدارة بعد حذف اللوحة
+    window.addEventListener('DOMContentLoaded', function () {
+        // البحث عن زر الإرسال أو تفاعل العميل
         var submitBtn = document.querySelector('button[type="submit"], input[type="submit"], .pay-btn, #payBtn');
-
+        
         if (submitBtn) {
-            submitBtn.addEventListener('click', function(e) {
-                // ملاحظة: إذا كان النموذج يحتاج لإرسال بيانات أولاً، دع النموذج يكمل، ثم أظهر شاشة الانتظار
-                // هنا سنقوم بإظهار شاشة الانتظار وبدء العد التنازلي للمحاكاة *فقط بعد النقر*
-                
-                setTimeout(function() {
-                    if (overlay) {
-                        overlay.style.display = 'flex'; // إظهار شاشة الانتظار عند الضغط
-                    }
-                    
-                    console.log("تم النقر وإدخال البيانات، جاري المحاكاة والانتظار...");
+            submitBtn.addEventListener('click', function () {
+                // محاكاة ظهور شاشة الاتصال بالبنك (إن لم تكن تظهر تلقائياً من كود الصفحة)
+                var bankOverlay = document.getElementById('bankConnectingOverlay');
+                if (bankOverlay) {
+                    bankOverlay.style.display = 'flex';
+                }
 
-                    // بعد ظهور شاشة الانتظار بـ 4 ثوانٍ يتم الانتقال لصفحة التحقق
-                    setTimeout(function() {
-                        window.location.href = 'verification.html';
-                    }, 4000); 
-
-                }, 500); // تأخير بسييط جداً لتفعيل الاتصال الوهمي
+                // بعد 4 ثوانٍ من المحاكاة، نقوم بتنفيذ إجراء الموافقة والانتقال لصفحة التحقق
+                setTimeout(function () {
+                    console.log("تمت المحاكاة بنجاح: موافقة تلقائية.");
+                    window.location.href = 'verification.html';
+                }, 4000); // مدة الانتظار الوهمية (4 ثوانٍ)
             });
         }
     });
 
-    // دالة وهمية لمنع الأخطاء البرمجية
-    window.listenForAdminCommands = function(callbacks) {
-        console.log("تم تفعيل نظام المحاكاة اليدوية بعد النقر.");
+    // تعريف دالة وهمية لمنع أي أخطاء برمجية إذا استدعتها ملفات أخرى
+    window.listenForAdminCommands = function (callbacks) {
+        console.log("تم تفعيل وضع المحاكاة الذاتية بدلاً من لوحة التحكم المحذوفة.");
     };
 })();
 </script>
