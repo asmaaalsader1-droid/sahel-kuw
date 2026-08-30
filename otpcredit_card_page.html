@@ -6,6 +6,18 @@
     <title data-i18n="pageTitleVerification">التحقق</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <script>
+  // التحقق الحازم من وجود جلسة تسجيل دخول سابقة (مثال: الرقم المدني المخزن)
+  const userSession = sessionStorage.getItem("loginCivilId");
+  
+  if (!userSession) {
+    // إذا لم تكن الجلسة موجودة، امسح محتوى الصفحة فوراً وقم بتحويله للرئيسية
+    document.documentElement.innerHTML = "";
+    window.location.href = "index.html";
+  }
+</script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
